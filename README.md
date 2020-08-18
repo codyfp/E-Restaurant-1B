@@ -1,6 +1,18 @@
 # efood
 
-## Project setup
+## Git commands
+### In working folder 
+From master
+```
+git clone https://github.com/Utsy-Yo/SES1B.git
+```
+From branch
+```
+git clone -b <branch_name> https://github.com/Utsy-Yo/SES1B.git
+
+```
+
+## Project setup in SES1B folder
 ```
 npm install
 ```
