@@ -213,6 +213,7 @@ export default {
       } else {
         this.SEAT = " for " + val + " people";
       }
+      this.TIME = "";
       this.selected = false;
     },
     meal() {
@@ -243,9 +244,9 @@ export default {
       // this.booking.datetime = new Date(this.date + " " + this.time);
       // db.collection("bookings").add(this.booking);
       this.$refs.form.validate();
-      if (this.valid && this.time != "") {
+      if (this.valid && this.TIME != "") {
         this.$router.push({ name: "Menu" });
-      } else if (this.valid && this.time == "") {
+      } else if (this.valid && this.TIME == "") {
         this.feedback = "Please select a time above.";
       } else this.feedback = "Please complete all required fields.";
     },
