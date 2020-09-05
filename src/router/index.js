@@ -2,9 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Booking from "../views/Booking.vue";
-import Menu from "../views/Menu.vue"
+import Menu from "../views/Menu.vue";
 
 Vue.use(VueRouter);
+Vue.use(require("vue-moment"));
 
 const routes = [
   {
