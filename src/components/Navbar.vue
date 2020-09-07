@@ -7,8 +7,8 @@
 			<v-toolbar-title>E-Food</v-toolbar-title>
 			<v-spacer />
 
-            <v-btn to="#" class="right-btn">Sign Up</v-btn>
-            <v-btn to="#" class="right-btn">Login</v-btn>
+            <v-btn to="#" color="white" text rounded class="my-2 right-btn">Sign Up</v-btn>
+            <v-btn to="#" color="white" text rounded class="my-2 right-btn">Login</v-btn>
 
 		</v-app-bar>
 
