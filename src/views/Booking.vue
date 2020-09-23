@@ -26,102 +26,97 @@
     <v-container>
       <v-layout row>
         <v-flex>
-          <v-row justify="center">
-            <v-col>
-              <v-form ref="form" v-model="valid">
-                <v-card
-                  class="d-flex flex-wrap justify-center justify-space-around pb-10 pa-5"
-                  flat
-                >
-                  <v-card-text>
-                    <h1>Booking</h1>
-                    <v-spacer class="pb-5"></v-spacer>
+          <v-col>
+            <v-form ref="form" v-model="valid">
+              <v-card class="d-flex flex-wrap justify-center justify-space-around pb-10 pa-5" flat>
+                <v-card-text>
+                  <h1>Booking</h1>
+                  <v-spacer class="pb-5"></v-spacer>
 
-                    <!-- Result -->
-                    <h3>Booking at Le Bistrot d'Andre on {{date | moment("dddd Do MMMM YYYY")}}{{SEAT}}{{TIME}}</h3>
-                  </v-card-text>
+                  <!-- Result -->
+                  <h3>Booking at Le Bistrot d'Andre on {{date | moment("dddd Do MMMM YYYY")}}{{SEAT}}{{TIME}}</h3>
+                </v-card-text>
 
-                  <!-- DatePicker -->
-                  <v-card height="400">
-                    <v-date-picker v-model="date" :min="today"></v-date-picker>
+                <!-- DatePicker -->
+                <v-card height="400">
+                  <v-date-picker v-model="date" :min="today"></v-date-picker>
+                </v-card>
+
+                <v-card width="500" flat>
+                  <!-- Inputs -->
+                  <v-autocomplete
+                    :items="seats"
+                    :rules="[v => !!v || 'This field is required']"
+                    v-model="seat"
+                    label="Number of Seats"
+                    hint="For bookings over 10 people, please call us."
+                    persistent-hint
+                    placeholder="Select..."
+                    required
+                  ></v-autocomplete>
+                  <v-autocomplete
+                    v-if="seat != ''"
+                    v-model="meal"
+                    :items="meals"
+                    :rules="[v => !!v || 'This field is required']"
+                    label="Time of Day"
+                    placeholder="Select..."
+                    persistent-hint
+                    required
+                  ></v-autocomplete>
+
+                  <!-- Times -->
+                  <v-card v-if="meal == 'Breakfast'" class="d-flex flex-wrap pt-5" flat>
+                    <v-radio-group v-model="selected" row>
+                      <v-radio
+                        width="100"
+                        v-for="i in BTimes"
+                        :key="i"
+                        :label="i"
+                        :checked="true"
+                        @click="selectTime(i)"
+                        :disabled="disabledTime(i)"
+                        v-bind:style="{ background: dColour(i)}"
+                      ></v-radio>
+                    </v-radio-group>
                   </v-card>
-
-                  <v-card width="500" flat>
-                    <!-- Inputs -->
-                    <v-autocomplete
-                      :items="seats"
-                      :rules="[v => !!v || 'This field is required']"
-                      v-model="seat"
-                      label="Number of Seats"
-                      hint="For bookings over 10 people, please call us."
-                      persistent-hint
-                      placeholder="Select..."
-                      required
-                    ></v-autocomplete>
-                    <v-autocomplete
-                      v-if="seat != ''"
-                      v-model="meal"
-                      :items="meals"
-                      :rules="[v => !!v || 'This field is required']"
-                      label="Time of Day"
-                      placeholder="Select..."
-                      persistent-hint
-                      required
-                    ></v-autocomplete>
-
-                    <!-- Times -->
-                    <v-card v-if="meal == 'Breakfast'" class="d-flex flex-wrap pt-5" flat>
-                      <v-radio-group v-model="selected" row>
-                        <v-radio
-                          width="100"
-                          v-for="i in BTimes"
-                          :key="i"
-                          :label="i"
-                          :checked="true"
-                          @click="selectTime(i)"
-                          :disabled="disabledTime(i)"
-                          v-bind:style="{ background: dColour(i)}"
-                        ></v-radio>
-                      </v-radio-group>
-                    </v-card>
-                    <v-card v-if="meal == 'Lunch'" class="d-flex flex-wrap pt-5" flat>
-                      <v-radio-group v-model="selected" row>
-                        <v-radio
-                          width="100"
-                          v-for="i in LTimes"
-                          :key="i"
-                          :label="i"
-                          :checked="true"
-                          @click="selectTime(i)"
-                          :disabled="disabledTime(i)"
-                          v-bind:style="{ background: dColour(i)}"
-                        ></v-radio>
-                      </v-radio-group>
-                    </v-card>
-                    <v-card v-if="meal == 'Dinner'" class="d-flex flex-wrap pt-5" flat>
-                      <v-radio-group v-model="selected" row>
-                        <v-radio
-                          width="100"
-                          v-for="i in DTimes"
-                          :key="i"
-                          :label="i"
-                          :checked="true"
-                          @click="selectTime(i)"
-                          :disabled="disabledTime(i)"
-                          v-bind:style="{ background: dColour(i)}"
-                        ></v-radio>
-                      </v-radio-group>
-                    </v-card>
-                    <v-card flat class="red--text">{{feedback}}</v-card>
-                    <!-- Next Button -->
-                    <v-card flat>
-                      <v-btn color="primary" @click="btnNext">Next</v-btn>
-                    </v-card>
+                  <v-card v-if="meal == 'Lunch'" class="d-flex flex-wrap pt-5" flat>
+                    <v-radio-group v-model="selected" row>
+                      <v-radio
+                        width="100"
+                        v-for="i in LTimes"
+                        :key="i"
+                        :label="i"
+                        :checked="true"
+                        @click="selectTime(i)"
+                        :disabled="disabledTime(i)"
+                        v-bind:style="{ background: dColour(i)}"
+                      ></v-radio>
+                    </v-radio-group>
+                  </v-card>
+                  <v-card v-if="meal == 'Dinner'" class="d-flex flex-wrap pt-5" flat>
+                    <v-radio-group v-model="selected" row>
+                      <v-radio
+                        width="100"
+                        v-for="i in DTimes"
+                        :key="i"
+                        :label="i"
+                        :checked="true"
+                        @click="selectTime(i)"
+                        :disabled="disabledTime(i)"
+                        v-bind:style="{ background: dColour(i)}"
+                      ></v-radio>
+                    </v-radio-group>
+                  </v-card>
+                  <v-card flat class="red--text">{{feedback}}</v-card>
+                  <!-- Next Button -->
+                  <v-card flat>
+                    <v-btn color="primary" @click="btnNext">Next</v-btn>
                   </v-card>
                 </v-card>
-              </v-form>
-            </v-col>
-          </v-row>
+              </v-card>
+            </v-form>
+          </v-col>
         </v-flex>
       </v-layout>
     </v-container>
