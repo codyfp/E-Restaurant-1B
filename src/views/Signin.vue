@@ -26,7 +26,7 @@
 				></v-text-field>
                 </v-card-text>
 				<p class="feedback" v-if="feedback">{{ feedback }}</p>
-				<router-link to="/ForgotPass" tag="button" style="color: light grey;">Forget Password?</router-link>
+				<router-link to="/ForgotPassword" tag="button" style="color: light grey;">Forget Password?</router-link>
         <router-link to="/FAQ" tag="button">Need Help?</router-link>
 				
 			<v-divider class="mt-6"></v-divider>
