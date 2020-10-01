@@ -6,6 +6,7 @@ import Menu from "../views/Menu.vue";
 import Register from "../views/Register.vue";
 
 Vue.use(VueRouter);
+Vue.use(require("vue-moment"));
 
 const routes = [
   {
