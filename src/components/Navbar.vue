@@ -4,10 +4,10 @@
 		<v-app-bar color="rgb(66, 133, 221)" dark >
 			<v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
-			<v-toolbar-title>E-Food</v-toolbar-title>
+			<v-toolbar-title> <v-btn to="/" >Efood</v-btn></v-toolbar-title>
 			<v-spacer />
 
-            <v-btn to="#" color="white" text rounded class="my-2 right-btn">Sign Up</v-btn>
+            <v-btn to="Register" color="white" text rounded class="my-2 right-btn">Register</v-btn>
             <v-btn to="#" color="white" text rounded class="my-2 right-btn">Login</v-btn>
 
 		</v-app-bar>

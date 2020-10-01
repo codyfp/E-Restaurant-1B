@@ -67,8 +67,8 @@ html {
 </style>
  
 <template>
-  <div class="bg-image">
-    <v-app-bar color="deep-purple accent-4" dense dark>
+  <div class="bg-image"><!-- 
+    <v-app-bar color="deep-purple accent-4" dense dark> -->
     <v-container fluid>
       <v-layout>
         <!-- <v-col>
