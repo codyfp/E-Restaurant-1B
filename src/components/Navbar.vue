@@ -8,7 +8,7 @@
 			<v-spacer />
 
             <v-btn to="Register" color="white" text rounded class="my-2 right-btn">Register</v-btn>
-            <v-btn to="#" color="white" text rounded class="my-2 right-btn">Login</v-btn>
+            <v-btn to="Signin" color="white" text rounded class="my-2 right-btn">Login</v-btn>
 
 		</v-app-bar>
 
