@@ -15,52 +15,26 @@ items to my order so that I can plan my feast.
   <div class="menu">
     <v-row>
         <v-col>
-            <h1>Entrees</h1>
-            <v-card v-for='entree in entrees' :key='entree'>
+            <h1>Menu</h1>
+            <v-card v-for='m in menu' :key='m.id'>
                 <v-row>
                     <v-col>
                         <v-img height=100 width=100 src='../assets/baguette.jpg'></v-img>
                     </v-col>
                     <v-col>
                         <v-row>
-                            <h2 >{{entree.food}}</h2>
+                            <h2 >{{m.food}}</h2>
                         </v-row>
                         <v-row>
-                            <p>{{entree.description}}</p>
-                        </v-row>
-                    </v-col>
-                    <v-col>
-                        <v-row>
-                            <p>{{entree.price}}</p>
-                        </v-row>
-                        <v-row>
-                            <v-btn rounded @click="overlay = !overlay">Add to Order</v-btn>
-                        </v-row>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </v-col>
-        <v-col>
-            <h1>Mains</h1>
-            <v-card v-for='main in mains' :key='main'>
-                <v-row>
-                    <v-col>
-                        <v-img height=100 width=100 src='../assets/baguette.jpg'></v-img>
-                    </v-col>
-                    <v-col>
-                        <v-row>
-                            <h2 >{{main.food}}</h2>
-                        </v-row>
-                        <v-row>
-                            <p>{{main.description}}</p>
+                            <p>{{m.description}}</p>
                         </v-row>
                     </v-col>
                     <v-col>
                         <v-row>
-                            <p>{{main.price}}</p>
+                            <p>{{m.price}}</p>
                         </v-row>
                         <v-row>
-                            <v-btn rounded @click="overlay = !overlay">Add to Order</v-btn>
+                            <v-btn rounded @click="overlay = !overlay, index = m.id">Add to Order</v-btn>
                         </v-row>
                     </v-col>
                 </v-row>
@@ -73,7 +47,7 @@ items to my order so that I can plan my feast.
           :absolute="absolute"
           :value="overlay"
         >
-        <AddToOrder />
+        <AddToOrder v-on:updateBasket='updateBasket' :itemName='menu[index].food' :itemPrice='menu[index].price'/>
           <v-btn
             color="success"
             @click="overlay = false"
@@ -82,10 +56,20 @@ items to my order so that I can plan my feast.
         </v-overlay>
       </v-row>
   </v-row>
+    <div>
+        <div class='basket' v-for='b in basket' :key='b'>
+            <p>{{b.itemName}}: </p>
+            <p>{{b.quantity}}</p>
+        </div>
+        <p>Total Price: ${{Math.round(totalPrice)}}</p>
+    </div>
+    <v-btn @click='addToBooking'>Add to Booking</v-btn>
   </div>
 </template>
 
 <script>
+import db from "@/firebase/init";
+
 import AddToOrder from '@/components/AddToOrder.vue'
 export default {
     name: 'Menu',
@@ -95,17 +79,34 @@ export default {
     data(){
         return{
             absolute: true,
+            index: 0,
             overlay: false,
-            entrees: [
-                {food: "Baguette", description: "Toasted to Perfection", price: 4.35, },
-                {food: "Garlic Bread", description: "Toasted to Perfection also", price: 6.95, }
+            menu: [
+                {food: "Baguette", description: "Toasted to Perfection", price: 4.35, id: 0},
+                {food: "Garlic Bread", description: "Toasted to Perfection also", price: 6.95, id: 1},
+                {food: "Snails", description: "Fresh from the garden", price: 38.95, id: 2},
+                {food: "Truffles Spaghettini", description: "I dont know what this is", price: 25.95, id: 3},
+                {food: "Vegan Food", description: "Yuck", price: 44.35, id: 4},
             ],
-            mains: [
-                {food: "Snails", description: "Fresh from the garden", price: 38.95, },
-                {food: "Truffles Spaghettini", description: "I dont know what this is", price: 25.95, },
-                {food: "Vegan Food", description: "Yuck", price: 44.35, },
-            ]
+            basket: [],
+            totalPrice: 0
         }    
+    },
+    methods: {
+        updateBasket(e){
+            console.log(e)
+            this.basket.push(e)
+            this.overlay = false
+            this.totalPrice += (e.itemPrice * e.quantity)
+            
+        },
+        addToBooking(){
+            let bookingref = db.collection("Orders Online")
+            bookingref.add({
+                    basket: this.basket
+                
+            })
+        }
     }
 
     
@@ -113,5 +114,9 @@ export default {
 </script>
 
 <style>
+
+.basket{
+    display: flex
+}
 
 </style>

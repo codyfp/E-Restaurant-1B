@@ -2,6 +2,9 @@
   <div class="add-to-order">
       <v-card>
           <v-col>
+              <v-row>
+                  <h3 class='mx-auto'>{{itemName}} {{itemPrice}}</h3>
+              </v-row>
           <v-row>
               <v-col>
                   <h3>Quantity: </h3>
@@ -26,7 +29,7 @@
               </v-col>
           </v-row>
           <v-row>
-              <v-btn v-if='quantity>0' @click='test'>add to order</v-btn>
+              <v-btn v-if='quantity>0' @click='addToOrder'>add to order</v-btn>
           </v-row>
         </v-col>
       </v-card>
@@ -36,16 +39,20 @@
 <script>
 export default {
     name: "AddToOrder",
+    props: ['itemName', 'itemPrice'],
     data() {
         return {
             quantity: 1,
             addNote: false,
-            note: null
+            note: null,
+            itemToAdd: {},
+            overlay: false
         }
     },
     methods: {
-        test(){
-            console.log(this.note)
+        addToOrder(){
+            this.itemToAdd = {itemName: this.itemName, quantity: this.quantity, itemPrice: this.itemPrice}
+            this.$emit('updateBasket', this.itemToAdd)
         },
         removeNote(){
             this.addNote = false
