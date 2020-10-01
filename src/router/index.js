@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Booking from "../views/Booking.vue";
 import Menu from "../views/Menu.vue";
+import Register from "../views/Register.vue";
 
 Vue.use(VueRouter);
 Vue.use(require("vue-moment"));
@@ -23,6 +24,11 @@ const routes = [
     name: "Menu",
     component: Menu,
   },
+  {
+    path: "/Register",
+    name: "Register",
+    component: Register,
+  }
 ];
 
 const router = new VueRouter({
