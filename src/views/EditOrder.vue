@@ -31,13 +31,20 @@
                         v-on="on"
                       ></v-text-field>
                     </template>
-                    <v-date-picker v-model="date" @input="menu = false"></v-date-picker>
+                    <v-date-picker
+                      v-model="date"
+                      @input="menu = false"
+                    ></v-date-picker>
                   </v-menu>
                 </v-card>
-                <v-card style="padding-left:15px;" flat>
+                <v-card style="padding-left: 15px" flat>
                   <v-btn @click="clearFilter">Clear</v-btn>
                 </v-card>
               </v-card>
+              <p>
+                Note: Orders will be locked <strong>2 HOURS</strong> before the
+                booking time.
+              </p>
               <v-card class="d-flex justify-center" flat>
                 <table class="schedule">
                   <tr>
@@ -46,24 +53,74 @@
                     <th>Time</th>
                     <th>Seats</th>
                     <th>Location</th>
-                    <th>Edit Order</th>
-                    <th>Edit Booking</th>
+                    <th>Menu</th>
+                    <th>Booking</th>
                   </tr>
                   <tr v-for="booking in filteredBookings" :key="booking.id">
-                    <td>{{placement(booking.id) + 1}}</td>
-                    <td>{{booking.datetime.seconds | moment("DD MMM YYYY")}}</td>
-                    <td>{{booking.datetime.seconds | moment("h:mm a")}}</td>
-                    <td>{{booking.seat}}</td>
+                    <td>{{ placement(booking.id) + 1 }}</td>
+                    <td>
+                      {{ booking.datetime.seconds | moment("DD MMM YYYY") }}
+                    </td>
+                    <td>{{ booking.datetime.seconds | moment("h:mm a") }}</td>
+                    <td>{{ booking.seat }}</td>
                     <td>Surry Hills</td>
                     <td>
-                      <v-btn color="primary">Edit Order</v-btn>
+                      <v-btn color="primary">Edit Menu </v-btn>
                     </td>
                     <td>
-                      <v-btn color="error">Edit Booking</v-btn>
+                      <v-btn
+                        color="error"
+                        @click="editBook(booking.id)"
+                        :disabled="orderDisable(booking.datetime.seconds)"
+                        >Edit Booking
+                      </v-btn>
+                      <!-- <router-link
+                        :to="{
+                          name: 'EditBooking',
+                          params: { id: booking.id },
+                          query: { debug: true },
+                        }"
+                        tag="button"
+                      >
+                        <v-btn color="error">Edit Booking</v-btn>
+                      </router-link> -->
                     </td>
                   </tr>
                 </table>
               </v-card>
+              <v-dialog v-model="dialog" width="400">
+                <v-card>
+                  <router-link
+                    :to="{
+                      name: 'EditBooking',
+                      params: { id: this.ID },
+                    }"
+                    tag="button"
+                  >
+                    <v-btn
+                      @click="dialog = false"
+                      width="250"
+                      height="50"
+                      class="ma-5"
+                    >
+                      Edit Booking
+                    </v-btn>
+                  </router-link>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    @click="deleteOrder"
+                    width="250"
+                    height="50"
+                    class="ma-2 mb-4"
+                  >
+                    Cancel Booking
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn color="error" @click="dialog = false" class="my-5"
+                    >Close</v-btn
+                  >
+                </v-card>
+              </v-dialog>
             </v-card>
           </v-col>
         </v-flex>
@@ -75,10 +132,9 @@
 <script>
 import db from "@/firebase/init";
 // import firebase from "firebase";
+// import EditBooking from "@/views/EditBooking";
 
 export default {
-  name: "EditOrder",
-
   data() {
     return {
       user: "TEST@TESTIES.COM",
@@ -86,6 +142,8 @@ export default {
       menu: false,
       dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
       bookings: [],
+      dialog: false,
+      ID: 0,
     };
   },
 
@@ -134,6 +192,14 @@ export default {
   watch: {},
 
   methods: {
+    editBook(id) {
+      this.ID = id;
+      this.dialog = true;
+    },
+    deleteOrder() {
+      db.collection("bookings").doc(this.ID).delete();
+      this.dialog = false;
+    },
     formatDate(date) {
       if (!date) return null;
       return this.$moment(date).format("dddd, Do MMM YYYY");
@@ -144,7 +210,7 @@ export default {
     placement: function (id) {
       let array = [];
       if (this.edit) {
-        array = this.timeslots;
+        array = this.bookings;
       } else {
         array = this.filteredBookings;
       }
@@ -154,6 +220,15 @@ export default {
         })
         .indexOf(id);
       return place;
+    },
+    orderDisable: function (time) {
+      time = (time - 7200) * 1000;
+      let now = Date.now();
+      time = time - now;
+      if (time <= 0) {
+        return true;
+      }
+      return false;
     },
   },
 };
