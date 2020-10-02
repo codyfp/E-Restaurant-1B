@@ -67,31 +67,8 @@ html {
 </style>
  
 <template>
-  <div class="bg-image">
-    <v-app-bar color="deep-purple accent-4" dense dark>
-      <v-app-bar-nav-icon @click.stop="nav = !nav"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Le Bistrot d'Andre</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-spacer></v-spacer>
-
-      <v-spacer></v-spacer>
-      <!-- // Sign Up / Login -->
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <!-- <v-navigation-drawer v-model="nav">
-        <v-list></v-list>
-    </v-navigation-drawer>-->
-
+  <div class="bg-image"><!-- 
+    <v-app-bar color="deep-purple accent-4" dense dark> -->
     <v-container fluid>
       <v-layout>
         <!-- <v-col>
@@ -134,6 +111,7 @@ html {
       </v-layout>
     </v-container>
   </div>
+
 </template>
 
 
@@ -143,7 +121,7 @@ html {
 
 <script>
 export default {
-  name: "Home",
+	name: "Home",
 };
 
 var locations = [
