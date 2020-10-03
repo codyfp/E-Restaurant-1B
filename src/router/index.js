@@ -6,6 +6,7 @@ import Menu from "../views/Menu.vue";
 import Register from "../views/Register.vue";
 import Signin from "../views/Signin.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
+import Dashboard from "../views/Dashboard.vue"
 
 Vue.use(VueRouter);
 Vue.use(require("vue-moment"));
@@ -40,6 +41,11 @@ const routes = [
     path: "/ForgotPassword",
     name: "Forgot Password",
     component: ForgotPassword,
+  },
+  {
+    path: "/Dashboard",
+    name: "Dashboard",
+    component: Dashboard, 
   }
 ];
 

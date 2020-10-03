@@ -7,8 +7,14 @@
 			<v-toolbar-title> <v-btn to="/" >Efood</v-btn></v-toolbar-title>
 			<v-spacer />
 
-            <v-btn to="Register" color="white" text rounded class="my-2 right-btn">Register</v-btn>
-            <v-btn to="Signin" color="white" text rounded class="my-2 right-btn">Login</v-btn>
+            <v-btn v-if="!user" to="Register" color="white" text rounded class="my-2 right-btn">Register</v-btn>
+
+            <v-btn v-if="!user" to="Signin" color="white" text rounded class="my-2 right-btn">Login</v-btn>
+
+            <v-btn v-if="user" to="Home" color="white" text rounded class="my-2 right-btn">Logout</v-btn>
+
+            <v-btn v-if="user" color="white" text rounded class="my-2 right-btn">Logged in as: {{ user.email }}</v-btn>
+
 
 		</v-app-bar>
 
@@ -25,11 +31,13 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 
 export default {
     name: "Navbar",
     
     data: () => ({
+        user: null,
         drawer: false,
         group: null,
         pages:[
@@ -47,8 +55,23 @@ export default {
                 },
         ],
     }),
-	
-};
+	methods: {
+        logout(){
+            firebase.auth().signOut().then(() => {
+                this.$router.push({name: 'Home'})
+            })
+        },
+        created(){
+           firebase.auth().onAuthStateChanged((user) => {
+               if(user){
+                   this.user = user
+               } else {
+                   this.user = null
+               }
+           })
+        }
+    }
+}
 </script>
 
 <style scoped>
