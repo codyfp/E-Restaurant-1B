@@ -142,13 +142,13 @@ import slugify from "slugify";
               .createUserWithEmailAndPassword(this.email, this.password)
               .then(cred => {
                 ref.set({
-                  firstname: this.firstname,
+                  fullName: this.fullName,
                   email: this.email,
                   user_id: cred.user.uid
                 });
               })
               .then(() => {
-                this.$router.push({ name: 'Booking'});
+                this.$router.push({ name: 'Dashboard'});
               })
               .catch(err => {
                 console.log(err);
