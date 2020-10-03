@@ -3,10 +3,12 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Booking from "../views/Booking.vue";
 import Menu from "../views/Menu.vue";
+import EditOrder from "../views/EditOrder";
+import EditBooking from "../views/EditBooking";
 import Register from "../views/Register.vue";
 import Signin from "../views/Signin.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
-import Dashboard from "../views/Dashboard.vue"
+import Dashboard from "../views/Dashboard.vue";
 
 Vue.use(VueRouter);
 Vue.use(require("vue-moment"));
@@ -28,6 +30,16 @@ const routes = [
     component: Menu,
   },
   {
+    path: "/EditOrder",
+    name: "EditOrder",
+    component: EditOrder,
+  },
+  {
+    path: "/EditBooking",
+    name: "EditBooking",
+    component: EditBooking,
+  },
+  {
     path: "/Register",
     name: "Register",
     component: Register,
@@ -45,8 +57,8 @@ const routes = [
   {
     path: "/Dashboard",
     name: "Dashboard",
-    component: Dashboard, 
-  }
+    component: Dashboard,
+  },
 ];
 
 const router = new VueRouter({
