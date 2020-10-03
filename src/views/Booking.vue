@@ -147,12 +147,13 @@
 
 <script>
 import db from "@/firebase/init";
-// import firebase from "firebase";
+import firebase from "firebase";
 export default {
   name: "Booking",
 
   data() {
     return {
+      user: "",
       today: new Date().toISOString().substr(0, 10),
       tomorrow: "",
       date: new Date().toISOString().substr(0, 10),
@@ -223,6 +224,13 @@ export default {
   },
 
   created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user.email;
+      } else {
+        this.user = null;
+      }
+    });
     this.date = this.$moment(this.date).add(1, "days").format("YYYY-MM-DD");
     this.tomorrow = this.$moment(this.today)
       .add(1, "days")
@@ -263,7 +271,7 @@ export default {
       this.time = time;
     },
     btnSkip() {
-      this.booking.UsrID = "TEST@TESTIES.COM";
+      this.booking.UsrID = this.user;
       this.booking.seat = this.seat;
       this.booking.datetime = new Date(this.date + " " + this.time);
       db.collection("bookings").add(this.booking);
