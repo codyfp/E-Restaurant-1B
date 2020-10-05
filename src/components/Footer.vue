@@ -24,10 +24,6 @@ export default {
 				link:"About",
 			},
 			{
-				title:"Dev Team",
-				link:"Team",	
-			},
-			{
 				title:"FAQ",
 				link:"FAQs",
 			},
