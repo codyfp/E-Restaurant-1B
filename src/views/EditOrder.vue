@@ -4,7 +4,7 @@
       <v-layout row>
         <v-flex>
           <v-col>
-            <v-card class="pa-5" min-height="850" flat>
+            <v-card class="pa-5" min-height="720" flat>
               <v-card-text>
                 <h1>Edit Order</h1>
                 <v-spacer class="pb-5"></v-spacer>
@@ -65,7 +65,11 @@
                     <td>{{ booking.seat }}</td>
                     <td>Surry Hills</td>
                     <td>
-                      <v-btn color="primary">Edit Menu </v-btn>
+                      <v-btn
+                        color="primary"
+                        :disabled="orderDisable(booking.datetime.seconds)"
+                        >Edit Menu
+                      </v-btn>
                     </td>
                     <td>
                       <v-btn
@@ -131,16 +135,15 @@
 
 <script>
 import db from "@/firebase/init";
-// import firebase from "firebase";
+import firebase from "firebase";
 // import EditBooking from "@/views/EditBooking";
 
 export default {
   data() {
     return {
-      user: "TEST@TESTIES.COM",
+      user: "",
       date: "",
       menu: false,
-      dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
       bookings: [],
       dialog: false,
       ID: 0,
@@ -148,6 +151,13 @@ export default {
   },
 
   created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user.email;
+      } else {
+        this.user = null;
+      }
+    });
     let refBookings = db.collection("bookings").orderBy("datetime", "asc");
     refBookings.onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
@@ -180,8 +190,32 @@ export default {
 
   computed: {
     filteredBookings: function () {
+      if (this.user == "staffefooddemo@gmail.com" && this.date.length == 0) {
+        return this.bookings;
+      }
       return this.bookings.filter((booking) => {
-        return booking.UsrID.match(this.user);
+        if (this.user == "staffefooddemo@gmail.com" && this.date.length > 0) {
+          if (
+            JSON.stringify(
+              this.$moment(booking.datetime.seconds * 1000).format("YYYY-MM-DD")
+            ) == JSON.stringify(this.date)
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        } else if (this.date.length == 0) return booking.UsrID.match(this.user);
+        else {
+          if (
+            JSON.stringify(
+              this.$moment(booking.datetime.seconds * 1000).format("YYYY-MM-DD")
+            ) == JSON.stringify(this.date)
+          ) {
+            return booking.UsrID.match(this.user);
+          } else {
+            return false;
+          }
+        }
       });
     },
     formattedDate() {
@@ -222,6 +256,9 @@ export default {
       return place;
     },
     orderDisable: function (time) {
+      if (this.user == "staffefooddemo@gmail.com") {
+        return false;
+      }
       time = (time - 7200) * 1000;
       let now = Date.now();
       time = time - now;

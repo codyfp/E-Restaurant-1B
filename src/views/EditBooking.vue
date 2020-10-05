@@ -7,7 +7,7 @@
             <v-form ref="form" v-model="valid">
               <v-card
                 class="d-flex flex-wrap justify-center justify-space-around pb-10 pa-5"
-                min-height="850"
+                min-height="720"
                 flat
               >
                 <v-card-text>
