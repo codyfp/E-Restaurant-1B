@@ -11,7 +11,7 @@
 
             <v-btn v-if="!user" to="Signin" color="white" text rounded class="my-2 right-btn">Login</v-btn>
 
-            <v-btn v-if="user" to="Home" color="white" text rounded class="my-2 right-btn">Logout</v-btn>
+            <v-btn v-if="user"  @click="logout" to="Home" color="white" text rounded class="my-2 right-btn">Logout</v-btn>
 
             <v-btn v-if="user" color="white" text rounded class="my-2 right-btn">Logged in as: {{ user.email }}</v-btn>
 
@@ -61,7 +61,8 @@ export default {
                 this.$router.push({name: 'Home'})
             })
         },
-        created(){
+    },
+     created(){
            firebase.auth().onAuthStateChanged((user) => {
                if(user){
                    this.user = user
@@ -71,7 +72,8 @@ export default {
            })
         }
     }
-}
+
+
 </script>
 
 <style scoped>
