@@ -2,7 +2,7 @@
     <v-row justify="center">
         <v-col cols="12" sm="8" md="6" lg="4">
            <br><br>
-          <h1>Login</h1>
+          <h1>Staff Login</h1>
             <br><br> 
             <v-card ref="form"  @submit.prevent="login">
             <v-card-text>
@@ -30,11 +30,9 @@
         <router-link to="/FAQs" tag="button">Need Help?</router-link>
 				
 			<v-divider class="mt-6"></v-divider>
-				<v-card-actions>
-					<v-btn to="/Signin" >Cancel</v-btn>
-					<v-spacer></v-spacer>
-					<v-btn @click='login' color="primary" >Login</v-btn>
-                    </v-card-actions>
+				<v-card-actions style="display:block">
+					<v-btn @click='login' color="primary">Login</v-btn>
+        </v-card-actions>
       </v-card>
     </v-col>
   </v-row>

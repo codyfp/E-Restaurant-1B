@@ -8,7 +8,12 @@ import EditBooking from "../views/EditBooking";
 import Register from "../views/Register.vue";
 import Signin from "../views/Signin.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
-import Dashboard from "../views/Dashboard.vue";
+
+import Dashboard from "../views/Dashboard.vue"
+import StaffPortal from "../views/StaffPortal.vue";
+import About from "../views/About.vue";
+import FAQs from "../views/FAQs.vue";
+
 
 Vue.use(VueRouter);
 Vue.use(require("vue-moment"));
@@ -57,7 +62,23 @@ const routes = [
   {
     path: "/Dashboard",
     name: "Dashboard",
-    component: Dashboard,
+    component: Dashboard, 
+  },
+  {
+    path: "/Staff",
+    name: "StaffPortal",
+    component: StaffPortal,
+  },
+  {
+    path:"/About",
+    name: "About",
+    component: About,
+  },
+  {
+    path:"/FAQs",
+    name:"FAQs",
+    component: FAQs,
+
   },
 ];
 
