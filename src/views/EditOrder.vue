@@ -4,7 +4,7 @@
       <v-layout row>
         <v-flex>
           <v-col>
-            <v-card class="pa-5" min-height="700" flat>
+            <v-card class="pa-5" min-height="720" flat>
               <v-card-text>
                 <h1>Edit Order</h1>
                 <v-spacer class="pb-5"></v-spacer>

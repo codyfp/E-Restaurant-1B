@@ -154,6 +154,8 @@ export default {
   data() {
     return {
       user: "",
+      id: 0,
+      name: "",
       today: new Date().toISOString().substr(0, 10),
       tomorrow: "",
       date: new Date().toISOString().substr(0, 10),
@@ -236,6 +238,20 @@ export default {
       .add(1, "days")
       .format("YYYY-MM-DD");
     this.getDisabled(this.tomorrow);
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection("users")
+          .doc(user.email)
+          .get()
+          .then((result) => {
+            if (!result.exists) {
+              console.log("No such document!");
+            } else {
+              this.name = result.data().fullName;
+            }
+          });
+      }
+    });
   },
 
   watch: {
@@ -274,8 +290,18 @@ export default {
       this.booking.UsrID = this.user;
       this.booking.seat = this.seat;
       this.booking.datetime = new Date(this.date + " " + this.time);
-      db.collection("bookings").add(this.booking);
-      alert("Booking has been made (Placeholder - Plan to direct to success)");
+      this.id = Math.floor(Math.random() * 999999999);
+      db.collection("bookings")
+        .doc(JSON.stringify(this.id))
+        .set(this.booking)
+        .then(
+          this.$router.push({
+            name: "OrderSuccess",
+            params: { id: this.id, name: this.name },
+          })
+        );
+
+      // alert("Booking has been made (Placeholder - Plan to direct to success)");
     },
 
     btnNext() {
