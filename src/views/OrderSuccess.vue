@@ -12,7 +12,7 @@
               <v-icon color="green" size="100"> mdi-check-circle </v-icon>
               <v-card-text>
                 <h2 class="pb-10">
-                  Your order has been confirmed. Pleach check your email for
+                  Your order has been confirmed. Please check your email for
                   your invoice.
                 </h2>
                 <h3>Reference No: {{ id }}</h3>
