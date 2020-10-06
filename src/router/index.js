@@ -10,7 +10,6 @@ import Signin from "../views/Signin.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import OrderSuccess from "../views/OrderSuccess.vue";
 import Dashboard from "../views/Dashboard.vue";
-import GMap from "../views/GMap.vue";
 import StaffPortal from "../views/StaffPortal.vue";
 import About from "../views/About.vue";
 import FAQs from "../views/FAQs.vue";
@@ -65,9 +64,6 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: "/GMap",
-    name: "GMap",
-    compenent: GMap,
     path: "/Staff",
     name: "StaffPortal",
     component: StaffPortal,

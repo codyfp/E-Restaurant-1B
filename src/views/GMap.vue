@@ -23,54 +23,6 @@ export default {
                     streetViewControl: false
                 })
 
-                var marker = new google.maps.Marker({
-                position: {lat: -33.8152, lng: 151.0093},
-                map: map,
-                title: 'Doctor Demo (Dentist)'
-            })
-            
-                var marker = new google.maps.Marker({
-                position: {lat: -33.8158, lng: 151.0098},
-                map: map,
-                title: 'Doctor Can (Dentist)'
-            })
-            var marker2 = new google.maps.Marker({
-                position: {lat: -33.967, lng: 150.981},
-                map: map,
-                title: 'Doctor Dwayne Johnson'
-            })
-            var marker2 = new google.maps.Marker({
-                position: {lat: -33.7961, lng: 151.1780},
-                map: map,
-                title: 'Doctor Phill'
-            })
-            var marker2 = new google.maps.Marker({
-                position: {lat: -33.865143, lng: 151.209900},
-                map: map,
-                title: 'Doctor Darshan'
-            })
-            var marker2 = new google.maps.Marker({
-                position: {lat: -33.9646, lng: 151.1010},
-                map: map,
-                title: 'Doctor Greg'
-            })
-
-             var marker2 = new google.maps.Marker({
-                position: {lat: -33.9495, lng: 151.2437},
-                map: map,
-                title: 'Doctor Andrews'
-            })
-             var marker2 = new google.maps.Marker({
-                position: {lat: -34.0299, lng: 151.1055},
-                map: map,
-                title: 'Doctor Mary'
-            })
-              var marker2 = new google.maps.Marker({
-                position: {lat: -33.7668, lng: 150.9053},
-                map: map,
-                title: 'Doctor Singh'
-            })
-
             }
         },
     mounted(){
