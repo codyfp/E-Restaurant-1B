@@ -8,8 +8,12 @@ import EditBooking from "../views/EditBooking";
 import Register from "../views/Register.vue";
 import Signin from "../views/Signin.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
+import OrderSuccess from "../views/OrderSuccess.vue";
 import Dashboard from "../views/Dashboard.vue";
 import GMap from "../views/GMap.vue";
+import StaffPortal from "../views/StaffPortal.vue";
+import About from "../views/About.vue";
+import FAQs from "../views/FAQs.vue";
 
 Vue.use(VueRouter);
 Vue.use(require("vue-moment"));
@@ -64,6 +68,24 @@ const routes = [
     path: "/GMap",
     name: "GMap",
     compenent: GMap,
+    path: "/Staff",
+    name: "StaffPortal",
+    component: StaffPortal,
+  },
+  {
+    path: "/About",
+    name: "About",
+    component: About,
+  },
+  {
+    path: "/FAQs",
+    name: "FAQs",
+    component: FAQs,
+  },
+  {
+    path: "/OrderSuccess",
+    name: "OrderSuccess",
+    component: OrderSuccess,
   },
 ];
 
