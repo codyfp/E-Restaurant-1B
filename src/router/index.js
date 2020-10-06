@@ -13,6 +13,7 @@ import Dashboard from "../views/Dashboard.vue";
 import StaffPortal from "../views/StaffPortal.vue";
 import About from "../views/About.vue";
 import FAQs from "../views/FAQs.vue";
+import EditAccount from "../views/EditAccount.vue";
 
 Vue.use(VueRouter);
 Vue.use(require("vue-moment"));
@@ -83,6 +84,11 @@ const routes = [
     name: "OrderSuccess",
     component: OrderSuccess,
   },
+  {
+    path: "/EditAccount",
+    name: "EditAccount",
+    component: EditAccount,
+  }
 ];
 
 const router = new VueRouter({
