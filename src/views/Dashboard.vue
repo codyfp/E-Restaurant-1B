@@ -122,12 +122,11 @@ html {
         <div id="maps"></div>
         <v-flex>
           <div class="main-text">
-            <!-- <h1>Welcome, {{ user.email }}!</h1> -->
-            <!-- <v-btn color="white" text rounded class="my-2 right-btn">Logged in as: {{ user.name }}</v-btn> -->
+            <!-- <h1>Welcome, {{ user.name }}!</h1> -->
           </div>
 
           <v-col style="margin-top: 100px;">
-            <v-card class="main-text" min-height="720" flat>
+            <v-card min-height="720" flat>
               <v-card-text>
                 <h1>Current Bookings</h1>
                 <v-spacer class="pb-5"></v-spacer>
@@ -211,11 +210,8 @@ html {
 </template>
 
 <script>
-// import db from "@/firebase/init";
 import firebase from "firebase";
 import db from "@/firebase/init";
-
-// import EditBooking from "@/views/EditBooking";
 
 export default {
   data() {
@@ -347,6 +343,15 @@ export default {
         return true;
       }
       return false;
+    },
+    created(){
+      firebase.auth().onAuthStateChanged((user) => {
+          if(user){
+              this.user = user
+          } else {
+              this.user = null
+          }
+        });
     },
   },
 };
