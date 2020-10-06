@@ -183,7 +183,7 @@ export default {
     emailSuccess() {
       window.Email.send({
         SecureToken: "d9e936a8-27cb-443b-827c-72937ef20e82",
-        To: "this.email",
+        To: this.email,
         From: "LeBistrotdAndre@gmail.com",
         FromName: "Le Bistrot d'Andre",
         Subject: "Account Register Success!",
