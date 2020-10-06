@@ -4,7 +4,7 @@
 		<v-app-bar color="rgb(66, 133, 221)" dark >
 			<v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
-			<v-toolbar-title> <v-btn to="/" >Efood</v-btn></v-toolbar-title>
+			<v-toolbar-title> <v-btn to="/" >Le Bistrot d'Andre</v-btn></v-toolbar-title>
 			<v-spacer />
 
             <v-btn v-if="!user" to="Register" color="white" text rounded class="my-2 right-btn">Register</v-btn>
@@ -13,7 +13,7 @@
 
             <v-btn v-if="user"  @click="logout" to="Home" color="white" text rounded class="my-2 right-btn">Logout</v-btn>
 
-            <v-btn v-if="user" color="white" text rounded class="my-2 right-btn">Logged in as: {{ user.email }}</v-btn>
+            <v-btn v-if="user" to="/dashboard" color="white" text rounded class="my-2 right-btn">Logged in as: {{ user.email }}</v-btn>
 
 
 		</v-app-bar>
