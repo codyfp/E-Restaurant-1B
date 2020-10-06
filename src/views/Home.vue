@@ -130,6 +130,7 @@ var locations = [
   { lat: -33.79, lng: 151.2091 },
   { lat: -33.84, lng: 151.2098 },
   { lat: -33.9, lng: 149.6 },
+  { lat: -33.9, lng: 149.6 },
   { lat: -35.9, lng: 149.2 },
 ];
 var names = [

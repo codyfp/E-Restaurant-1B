@@ -9,6 +9,7 @@ import Register from "../views/Register.vue";
 import Signin from "../views/Signin.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import Dashboard from "../views/Dashboard.vue";
+import GMap from "../views/GMap.vue";
 
 Vue.use(VueRouter);
 Vue.use(require("vue-moment"));
@@ -58,6 +59,11 @@ const routes = [
     path: "/Dashboard",
     name: "Dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/GMap",
+    name: "GMap",
+    compenent: GMap,
   },
 ];
 
