@@ -14,6 +14,8 @@ import StaffPortal from "../views/StaffPortal.vue";
 import About from "../views/About.vue";
 import FAQs from "../views/FAQs.vue";
 import EditAccount from "../views/EditAccount.vue";
+import firebase from 'firebase';
+import ErrorSigninPage from "../views/ErrorSigninPage.vue";
 
 Vue.use(VueRouter);
 Vue.use(require("vue-moment"));
@@ -28,6 +30,9 @@ const routes = [
     path: "/Booking",
     name: "Booking",
     component: Booking,
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: "/menu",
@@ -38,11 +43,18 @@ const routes = [
     path: "/EditOrder",
     name: "EditOrder",
     component: EditOrder,
+    
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: "/EditBooking",
     name: "EditBooking",
     component: EditBooking,
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: "/Register",
@@ -63,11 +75,17 @@ const routes = [
     path: "/Dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: "/Staff",
     name: "StaffPortal",
     component: StaffPortal,
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: "/About",
@@ -83,11 +101,22 @@ const routes = [
     path: "/OrderSuccess",
     name: "OrderSuccess",
     component: OrderSuccess,
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: "/EditAccount",
     name: "EditAccount",
     component: EditAccount,
+    meta:{
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/ErrorSigninPage",
+    name: "ErrorSigninPage",
+    component: ErrorSigninPage,
   }
 ];
 
@@ -96,5 +125,22 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  //check to see if route requires auth.
+  if(to.matched.some(rec => rec.meta.requiresAuth)){
+    //check auth state of user. 
+    let user = firebase.auth().currentUser
+    if(user){
+      //user signed in, proceed to route
+      next()
+    } else {
+      //no user signed in, redirect to login.
+      next({ name: 'ErrorSigninPage'})
+    }
+  } else {
+    next()
+  }
+})
 
 export default router;
