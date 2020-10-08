@@ -16,7 +16,9 @@ items to my order so that I can plan my feast.
     <v-row>
         <v-col>
             <h1>Menu</h1>
-            <v-card v-for='m in menu' :key='m.id'>
+            <v-btn @click="meal = 'lunch'">Lunch</v-btn>
+            <v-btn @click="meal = 'dinner'">Dinner</v-btn>
+            <v-card v-for='m in menu[meal]' :key='m.id'>
                 <v-row>
                     <v-col>
                         <v-img height=100 width=100 src='../assets/baguette.jpg'></v-img>
@@ -46,8 +48,8 @@ items to my order so that I can plan my feast.
         <v-overlay
           :absolute="absolute"
           :value="overlay"
-        >
-        <AddToOrder v-on:updateBasket='updateBasket' :itemName='menu[index].food' :itemPrice='menu[index].price'/>
+        >[[
+        <AddToOrder v-on:updateBasket='updateBasket' :itemName='menu[meal][index].food' :itemPrice='menu[meal][index].price'/>
           <v-btn
             color="success"
             @click="overlay = false"
@@ -78,18 +80,27 @@ export default {
     },
     data(){
         return{
+            meal: 'dinner',
             absolute: true,
             index: 0,
             overlay: false,
-            menu: [
-                {food: "Baguette", description: "Toasted to Perfection", price: 4.35, id: 0},
-                {food: "Garlic Bread", description: "Toasted to Perfection also", price: 6.95, id: 1},
-                {food: "Snails", description: "Fresh from the garden", price: 38.95, id: 2},
-                {food: "Truffles Spaghettini", description: "I dont know what this is", price: 25.95, id: 3},
-                {food: "Vegan Food", description: "Yuck", price: 44.35, id: 4},
-            ],
+            menu: 
+                {
+                lunch: [
+                    {food: "Burger", description: "Toasted to Perfection", price: 4.35, id: 0},
+                    {food: "Bread", description: "Toasted to Perfection also", price: 6.95, id: 1},
+                    {food: "Pizza", description: "Fresh from the garden", price: 38.95, id: 2},
+                ],
+                dinner: [
+                    {food: "Baguette", description: "Toasted to Perfection", price: 4.35, id: 0},
+                    {food: "Garlic Bread", description: "Toasted to Perfection also", price: 6.95, id: 1},
+                    {food: "Snails", description: "Fresh from the garden", price: 38.95, id: 2},
+                    {food: "Truffles Spaghettini", description: "I dont know what this is", price: 25.95, id: 3},
+                    {food: "Vegan Food", description: "Yuck", price: 44.35, id: 4},  
+                    ]
+                },
             basket: [],
-            totalPrice: 0
+            totalPrice: 0.00
         }    
     },
     methods: {
