@@ -43,6 +43,16 @@ html {
   padding: 20px;
   text-align: center;
 }
+.main-text {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  padding: 20px;
+  text-align: center;
+  font-size: 50px;
+}
 .bg-text-style {
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
@@ -68,46 +78,42 @@ html {
  
 <template>
   <div class="bg-image">
-    <v-app-bar color="deep-purple accent-4" dense dark>
     <v-container fluid>
       <v-layout>
-        <!-- <v-col>
-          <v-row>
+        <v-flex>
+          <v-col>
             <v-col>
-              <v-img height="100" width="100" src="../assets/baguette.jpg"></v-img>
+              <div class="main-text" align="center">
+                <h1 style="text-align: center;">Le Bistrot d'Andre</h1>
+              </div>
             </v-col>
-            <v-col></v-col>
-          </v-row>
-        </v-col>-->
-        <div id="maps"></div>
-        <div class="blur">
-          <h1>HellWorld</h1>
-        </div>
-        <!-- <div align="center">
-          <h1 style="text-align: center;">Le Bistrot d'Andre</h1>
-        </div>-->
+        
+            <v-row>
+              <div id="maps"></div>
+            </v-row>
 
-        <div class="bg-text">
-          <h1>BOOKINGS NOW AVAILABLE</h1>
-          <h2>69 Commonwealth St, Surry Hills NSW 2010</h2>
-          <h3>02 9281 3322</h3>
-          <h3>eat@lebistrot.com.au</h3>
-        </div>
-        <div>
-          <v-row class="bg-text-style">
-            <div class="text-center">
-              <v-btn color="indigo" class="ma-2" tile dark href="/booking">Book Now</v-btn>
+            <v-col>
+              <div class="bg-text">
+                <h1>BOOKINGS NOW AVAILABLE</h1>
+                <h2>69 Commonwealth St, Surry Hills NSW 2010</h2>
+                <h3>02 9281 3322</h3>
+                <h3>eat@lebistrot.com.au</h3>
+              </div>
+            </v-col>      
+
+            <div>
+              <v-row class="bg-text-style">
+                <div class="text-center">
+                  <v-btn color="indigo" class="ma-2" tile dark href="/booking">Book Now</v-btn>
+                </div>
+                <v-spacer></v-spacer>
+                <div class="text-center">
+                  <v-btn class="ma-2" tile color="indigo" dark href="/menu">Menu</v-btn>
+                </div>
+              </v-row>
             </div>
-            <v-spacer></v-spacer>
-            <div class="text-center">
-              <!-- <v-btn rounded color="primary" dark href="/menu">Menu</v-btn> -->
-              <v-btn class="ma-2" tile color="indigo" dark href="/menu">Menu</v-btn>
-            </div>
-          </v-row>
-        </div>
-        <!-- <v-img
-          src="https://e7.pngegg.com/pngimages/686/914/png-clipart-sad-frog-illustration-pepe-the-frog-sadness-alt-right-meme-sad-leaf-animals.png"
-        ></v-img>-->
+          </v-col>
+        </v-flex>
       </v-layout>
     </v-container>
   </div>
@@ -129,6 +135,7 @@ var locations = [
   { lat: -33.8652, lng: 151.21 },
   { lat: -33.79, lng: 151.2091 },
   { lat: -33.84, lng: 151.2098 },
+  { lat: -33.9, lng: 149.6 },
   { lat: -33.9, lng: 149.6 },
   { lat: -35.9, lng: 149.2 },
 ];

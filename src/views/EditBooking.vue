@@ -7,13 +7,23 @@
             <v-form ref="form" v-model="valid">
               <v-card
                 class="d-flex flex-wrap justify-center justify-space-around pb-10 pa-5"
+                min-height="720"
                 flat
               >
                 <v-card-text>
-                  <h1>Booking</h1>
+                  <h1>Edit Booking</h1>
                   <v-spacer class="pb-5"></v-spacer>
 
                   <!-- Result -->
+                  <h3>Current Booking:</h3>
+                  <h3>
+                    {{
+                      current[0].datetime.seconds | moment("dddd Do MMMM YYYY")
+                    }}
+                    for {{ current[0].seat }} at
+                    {{ current[0].datetime.seconds | moment("h:mm a") }}
+                  </h3>
+                  <h3>New Booking:</h3>
                   <h3>
                     Booking at Le Bistrot d'Andre on
                     {{ date | moment("dddd Do MMMM YYYY") }}{{ SEAT }}{{ TIME }}
@@ -105,38 +115,16 @@
                   </v-card>
                   <v-card flat class="red--text">{{ feedback }}</v-card>
                   <!-- Next Button -->
-                  <v-card flat>
-                    <v-btn color="primary" @click="btnNext">Next</v-btn>
-                  </v-card>
+                  <div class="d-flex flex-no-wrap justify-space-between">
+                    <router-link to="/EditOrder" tag="button">
+                      <v-btn>Back</v-btn>
+                    </router-link>
+                    <v-btn color="primary" @click="updateBooking"
+                      >Confirm Change</v-btn
+                    >
+                  </div>
                 </v-card>
               </v-card>
-              <v-dialog v-model="dialog" width="400" persistent>
-                <v-card>
-                  <router-link to="Menu" tag="button">
-                    <v-btn
-                      @click="dialog = false"
-                      width="250"
-                      height="50"
-                      class="ma-5"
-                    >
-                      Order Menu
-                    </v-btn>
-                  </router-link>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    @click="btnSkip"
-                    width="250"
-                    height="50"
-                    class="ma-2 mb-4"
-                  >
-                    Skip Menu
-                  </v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn color="error" @click="dialog = false" class="my-5"
-                    >Back</v-btn
-                  >
-                </v-card>
-              </v-dialog>
             </v-form>
           </v-col>
         </v-flex>
@@ -147,21 +135,20 @@
 
 <script>
 import db from "@/firebase/init";
-import firebase from "firebase";
+import router from "../router";
+// import firebase from "firebase";
+
 export default {
-  name: "Booking",
+  name: "EditBooking",
 
   data() {
     return {
-      user: "",
       id: 0,
-      name: "",
+      current: [],
       today: new Date().toISOString().substr(0, 10),
-      tomorrow: "",
       date: new Date().toISOString().substr(0, 10),
-      next: "",
+      tomorrow: "",
       valid: false,
-      dialog: false,
       booking: {
         seat: "",
         datetime: "",
@@ -226,31 +213,26 @@ export default {
   },
 
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.user = user.email;
-      } else {
-        this.user = null;
-      }
-    });
     this.date = this.$moment(this.date).add(1, "days").format("YYYY-MM-DD");
     this.tomorrow = this.$moment(this.today)
       .add(1, "days")
       .format("YYYY-MM-DD");
     this.getDisabled(this.tomorrow);
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        db.collection("users")
-          .doc(user.email)
-          .get()
-          .then((result) => {
-            if (!result.exists) {
-              console.log("No such document!");
-            } else {
-              this.name = result.data().fullName;
-            }
+    this.id = this.$route.params.id;
+
+    let refBookings = db.collection("bookings");
+
+    refBookings.onSnapshot((snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        let doc = change.doc;
+        if (doc.id == this.id) {
+          this.current.push({
+            datetime: doc.data().datetime,
+            seat: doc.data().seat,
           });
-      }
+          this.seat = this.seats[doc.data().seat - 1];
+        }
+      });
     });
   },
 
@@ -281,38 +263,31 @@ export default {
   },
 
   methods: {
+    // updateBooking() {
+    //   db.collection("bookings").doc(this.id).update({
+    //     seat: this.seat,
+    //     datetime: this.datetime,
+    //   });
+    // },
+    navigate() {
+      router.go(-1);
+    },
     selectTime(time) {
       // this.TIME = " at " + this.$moment(time * 1000).format("h:mm a");
       this.TIME = " at " + time;
       this.time = time;
     },
-    btnSkip() {
-      this.booking.UsrID = this.user;
+    updateBooking() {
       this.booking.seat = this.seat;
       this.booking.datetime = new Date(this.date + " " + this.time);
-      this.id = Math.floor(Math.random() * 999999999);
-      db.collection("bookings")
-        .doc(JSON.stringify(this.id))
-        .set(this.booking)
-        .then(
-          this.$router.push({
-            name: "OrderSuccess",
-            params: { id: this.id, name: this.name },
-          })
-        );
-
-      // alert("Booking has been made (Placeholder - Plan to direct to success)");
-    },
-
-    btnNext() {
       this.$refs.form.validate();
       if (this.valid && this.TIME != "") {
-        this.dialog = true;
+        db.collection("bookings").doc(this.id).update(this.booking);
+        this.$router.push({ name: "EditOrder" });
       } else if (this.valid && this.TIME == "") {
         this.feedback = "Please select a time above.";
       } else this.feedback = "Please complete all required fields.";
     },
-
     getDisabled(date) {
       let refBookings = db.collection("bookings");
       refBookings.onSnapshot((snapshot) => {

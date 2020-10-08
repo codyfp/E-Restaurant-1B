@@ -1,4 +1,4 @@
-# efood
+# Le Bistrot d'Andre (efood)
 
 ## Git commands
 ### Cloning
