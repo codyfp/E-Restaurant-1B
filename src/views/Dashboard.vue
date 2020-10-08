@@ -1,132 +1,37 @@
-<style>
-body,
-html {
-  height: 100%;
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.bg-image {
-  /* The image used */
-  background-image: url("./img/bg-blur-image.jpg");
-
-  /* Add the blur effect */
-  /* filter: blur(8px);
-  -webkit-filter: blur(8px); */
-
-  /* Full height */
-  height: 100%;
-
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-/* Position text in the middle of the page/image */
-.bg-text {
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
-  color: white;
-  font-weight: bold;
-  border: 3px solid #f1f1f1;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  width: 80%;
-  padding: 20px;
-  text-align: center;
-}
-.main-text {
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
-  color: white;
-  font-weight: bold;
-  border: 3px solid #f1f1f1;
-  padding: 20px;
-  text-align: center;
-}
-.bg-text-style {
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
-  color: white;
-  font-weight: bold;
-  border: 3px solid #f1f1f1;
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  width: 20%;
-  padding: 20px;
-  text-align: center;
-}
-.blur {
-  z-index: 1;
-  height: 100%;
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
-}
-.bg {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background: url("./img/bg.jpg");
-  background-size: cover;
-}
-.schedule {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-  text-align: center;
-}
-
-.schedule td,
-.schedule th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.schedule tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.schedule tr:hover {
-  background-color: #ddd;
-}
-
-.schedule th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #009688;
-  color: white;
-  text-align: center;
-}
-
-.schedule v-btn {
-  cursor: pointer;
-}
-</style>
-
 <template>
   <div class="bg-image">
     <v-container>
+
+      <v-row class="center">
+        <div>
+          <v-btn color="indigo" class="ma-2" tile dark to="/Booking">Book Now</v-btn>
+          <v-btn class="ma-2" tile color="indigo" dark to="/Menu">Menu</v-btn>
+          
+        </div>
+      </v-row>
+
       <v-layout row>
         <div id="maps"></div>
         <v-flex>
           <div class="main-text">
-            <!-- <h1>Welcome, {{ this.user.name }}!</h1> -->
+           
           </div>
+            <div >
+              <h1>Welcome, {{funk}}!</h1>
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
           <v-col style="margin-top: 100px;">
-            <v-card min-height="720" flat>
+            <v-card min-height="450" flat>
               <v-card-text>
                 <h1>Current Bookings</h1>
                 <v-spacer class="pb-5"></v-spacer>
@@ -216,7 +121,8 @@ import db from "@/firebase/init";
 export default {
   data() {
     return {
-      user: "",
+      funk: "funk",
+      user: "Jim",
       date: "",
       menu: false,
       bookings: [],
@@ -451,3 +357,120 @@ function messageIn(message) {
   document.getElementById("history").appendChild(messageDiv);
 }
 </script>
+
+<style>
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bg-image {
+  /* The image used */
+  background-image: url("./img/bg-blur-image.jpg");
+
+  /* Add the blur effect */
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Position text in the middle of the page/image */
+.bg-text {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+.main-text {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  padding: 20px;
+  text-align: center;
+}
+.bg-text-style {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 20%;
+  padding: 20px;
+  text-align: center;
+}
+.blur {
+  z-index: 1;
+  height: 100%;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+.bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: url("./img/bg.jpg");
+  background-size: cover;
+}
+.schedule {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+
+.schedule td,
+.schedule th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.schedule tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.schedule tr:hover {
+  background-color: #ddd;
+}
+
+.schedule th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #009688;
+  color: white;
+  text-align: center;
+}
+
+.schedule v-btn {
+  cursor: pointer;
+}
+</style>
