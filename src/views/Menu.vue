@@ -25,7 +25,7 @@ items to my order so that I can plan my feast.
                     </v-col>
                     <v-col>
                         <v-row>
-                            <h2 >{{m.food}}</h2>
+                            <h2 >.{{m.food}}</h2>
                         </v-row>
                         <v-row>
                             <p>{{m.description}}</p>

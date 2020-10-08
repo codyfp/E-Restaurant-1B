@@ -3,7 +3,7 @@
       <v-card>
           <v-col>
               <v-row>
-                  <h3 class='mx-auto'>{{itemName}} {{itemPrice}}</h3>
+                  <h3 class='mx-auto'>{{itemName}}: {{itemPrice}}</h3>
               </v-row>
           <v-row>
               <v-col>
