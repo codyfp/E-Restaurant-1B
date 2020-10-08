@@ -122,7 +122,7 @@ html {
         <div id="maps"></div>
         <v-flex>
           <div class="main-text">
-            <!-- <h1>Welcome, {{ user.name }}!</h1> -->
+            <!-- <h1>Welcome, {{ this.user.name }}!</h1> -->
           </div>
 
           <v-col style="margin-top: 100px;">

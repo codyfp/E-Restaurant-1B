@@ -1,27 +1,18 @@
 <template>
-    <v-layout row>
+    <v-layout row justify="center">
         
         <h1>Edit Account</h1>
         <v-row justify="center">
           <v-col>
             <v-card ref="form">
               <v-card-text>
-                <h3>{{this.user.email}}</h3>
+                <h3>Hello, {{this.user.email}}</h3>
                 <v-text-field
-                  ref="name"
+                  ref="fullName"
                   v-model="details.fullName"
-                  label="New First Name"
-                  placeholder="First Name"
-                  hint="E.g. Hugh"
-                  required
-                ></v-text-field>
-
-                <v-text-field
-                  ref="name"
-                  v-model="details.lastname"
-                  label="New Last Name"
-                  placeholder="Surname"
-                  hint="E.g. Jass"
+                  label="New Full Name"
+                  placeholder="John Citizen"
+                  hint="E.g. Hugh Citizen"
                   required
                 ></v-text-field>
 
@@ -29,7 +20,7 @@
                   :type="show2 ? 'text' : 'password'"
                   name="input-10-2"
                   label="New Password"
-                  hint="At least 8 characters"
+                  hint="At least 6 characters"
                   class="input-group--focused"
                   @click:append="show2 = !show2"
                 ></v-text-field>
