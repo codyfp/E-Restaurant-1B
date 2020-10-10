@@ -1,41 +1,64 @@
 <template>
   <div class="bg-image">
     <v-container>
-
-      <v-row class="center">
-        <div>
-          <v-btn color="indigo" class="ma-2" tile dark to="/Booking">Book Now</v-btn>
-          <v-btn class="ma-2" tile color="indigo" dark to="/Menu">Menu</v-btn>
-          
-        </div>
-      </v-row>
-
       <v-layout row>
         <div id="maps"></div>
         <v-flex>
-          <div class="main-text">
-           
+          <div>
+            <h1 class="white pa-3">Welcome, {{ name }}!</h1>
           </div>
-            <div >
-              <h1>Welcome, {{funk}}!</h1>
+          <v-card
+            class="justify-center"
+            color="rgba(0,0,0,0.2)"
+            min-width="1000"
+          >
+            <div class="main-text">
+              <v-btn color="indigo" class="ma-2" tile dark to="/Booking"
+                >Book Now</v-btn
+              >
+              <v-btn class="ma-2" tile color="indigo" dark to="/Menu"
+                >Menu</v-btn
+              >
             </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
-          <v-col style="margin-top: 100px;">
-            <v-card min-height="450" flat>
+          </v-card>
+          <v-col>
+            <v-card min-height="550" flat>
               <v-card-text>
                 <h1>Current Bookings</h1>
                 <v-spacer class="pb-5"></v-spacer>
               </v-card-text>
+              <v-row class="pl-13">
+                <h4>Filter By:</h4>
+              </v-row>
+              <v-card class="d-flex pl-10 mb-6 align-center" flat>
+                <v-card width="300" flat>
+                  <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
+                      <v-text-field
+                        v-model="formattedDate"
+                        label="Date"
+                        append-icon="mdi-calendar"
+                        readonly
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="date"
+                      @input="menu = false"
+                    ></v-date-picker>
+                  </v-menu>
+                </v-card>
+                <v-card style="padding-left: 15px" flat>
+                  <v-btn @click="clearFilter">Clear</v-btn>
+                </v-card>
+              </v-card>
               <v-card class="d-flex justify-center" flat>
                 <table class="schedule">
                   <tr>
@@ -121,8 +144,8 @@ import db from "@/firebase/init";
 export default {
   data() {
     return {
-      funk: "funk",
-      user: "Jim",
+      name: "",
+      user: "",
       date: "",
       menu: false,
       bookings: [],
@@ -135,10 +158,30 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user.email;
+        db.collection("users")
+          .doc(user.email)
+          .get()
+          .then((result) => {
+            if (!result.exists) {
+              console.log("No such document!");
+            } else {
+              this.name = result.data().fullName;
+            }
+          });
       } else {
         this.user = null;
       }
     });
+    // db.collection("users")
+    //   .doc("asdfhasdkfjads")
+    //   .get()
+    //   .then((result) => {
+    //     if (!result.exists) {
+    //       console.log("No such document!");
+    //     } else {
+    //       this.name = result.data().fullName;
+    //     }
+    //   });
     let refBookings = db.collection("bookings").orderBy("datetime", "asc");
     refBookings.onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
@@ -170,7 +213,7 @@ export default {
   },
 
   computed: {
-    filteredBookings: function() {
+    filteredBookings: function () {
       if (this.user == "staffefooddemo@gmail.com" && this.date.length == 0) {
         return this.bookings;
       }
@@ -212,19 +255,17 @@ export default {
       this.dialog = true;
     },
     deleteOrder() {
-      db.collection("bookings")
-        .doc(this.ID)
-        .delete();
+      db.collection("bookings").doc(this.ID).delete();
       this.dialog = false;
     },
     formatDate(date) {
       if (!date) return null;
       return this.$moment(date).format("dddd, Do MMM YYYY");
     },
-    clearFilter: function() {
+    clearFilter: function () {
       this.date = "";
     },
-    placement: function(id) {
+    placement: function (id) {
       let array = [];
       if (this.edit) {
         array = this.bookings;
@@ -232,13 +273,13 @@ export default {
         array = this.filteredBookings;
       }
       let place = array
-        .map(function(e) {
+        .map(function (e) {
           return e.id;
         })
         .indexOf(id);
       return place;
     },
-    orderDisable: function(time) {
+    orderDisable: function (time) {
       if (this.user == "staffefooddemo@gmail.com") {
         return false;
       }
@@ -250,112 +291,17 @@ export default {
       }
       return false;
     },
-    created(){
+    created() {
       firebase.auth().onAuthStateChanged((user) => {
-          if(user){
-              this.user = user
-          } else {
-              this.user = null
-          }
-        });
+        if (user) {
+          this.user = user;
+        } else {
+          this.user = null;
+        }
+      });
     },
   },
 };
-</script>
-
-<script
-  async
-  defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALKwFMBtlWJ8nZgTeKTmkFwbH_J0B2pQM&libraries=places&callback=initMap"
-></script>
-
-<script>
-export default {
-  name: "Dashboard",
-};
-
-var locations = [{ lat: -33.865143, lng: 151.206 }];
-var names = ["Aiden Boal"];
-var markers = [];
-var map;
-var image =
-  "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
-
-function initMap() {
-  map = new google.maps.Map(document.getElementById("maps"), {
-    zoom: 12,
-    center: { lat: -33.865143, lng: 151.2099 },
-    streetViewControl: false,
-    rotateControl: false,
-    fullscreenControl: false,
-    styles: [
-      { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-      { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
-      { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-      {
-        featureType: "administrative.locality",
-        elementType: "labels.text.fill",
-        stylers: [{ color: "#d59563" }],
-      },
-    ],
-  });
-}
-function drop() {
-  clearMarkers();
-  for (var i = 0; i < locations.length; i++) {
-    addMarkerWithTimeout(locations[i], i * 200, i, names[i]);
-  }
-}
-drop();
-
-function createMarker(point, map, index, name) {
-  var markerOpts = {
-    position: point,
-    map: map,
-    animation: google.maps.Animation.DROP,
-    label: name.charAt(0),
-    title: name,
-  };
-
-  var marker = new google.maps.Marker(markerOpts);
-
-  google.maps.event.addListener(marker, "click", function() {
-    //window.alert(marker.getTitle());
-    messageIn(marker.getTitle());
-  });
-  google.maps.event.addListener(marker, "mouseover", function() {
-    //messageIn(marker.getTitle());
-  });
-}
-
-function addMarkerWithTimeout(position, timeout, index, name) {
-  clearMarkers();
-  window.setTimeout(function() {
-    markers.push(createMarker(position, map, index, name));
-  }, timeout);
-  //window.alert(index);
-}
-
-function clearMarkers() {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-  }
-  markers = [];
-}
-
-function messageIn(message) {
-  var messageDiv = document.createElement("div"); // create <div>
-  messageDiv.style.clear = "both";
-  messageDiv.className = "inbox-message in";
-  // create text for message div
-  var messageP = document.createElement("p"); //create <p> tag
-
-  // append text to message div
-  messageDiv.appendChild(messageP); // add <p> to <div>
-  messageP.appendChild(document.createTextNode(message)); // insert text into <p>
-  //append message div to chat history
-  document.getElementById("history").appendChild(messageDiv);
-}
 </script>
 
 <style>
@@ -409,7 +355,7 @@ html {
   color: white;
   font-weight: bold;
   border: 3px solid #f1f1f1;
-  padding: 20px;
+  padding: 1px;
   text-align: center;
 }
 .bg-text-style {
