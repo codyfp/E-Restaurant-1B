@@ -46,10 +46,6 @@ const routes = [
     path: "/EditOrder",
     name: "EditOrder",
     component: EditOrder,
-    
-    meta:{
-      requiresAuth: true
-    }
   },
   {
     path: "/EditBooking",
