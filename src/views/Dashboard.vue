@@ -11,6 +11,7 @@
             class="justify-center"
             color="rgba(0,0,0,0.2)"
             min-width="1000"
+            tile
           >
             <div class="main-text">
               <v-btn color="indigo" class="ma-2" tile dark to="/Booking"
