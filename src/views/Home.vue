@@ -100,18 +100,6 @@ html {
                 <h3>eat@lebistrot.com.au</h3>
               </div>
             </v-col>      
-
-            <div>
-              <v-row class="bg-text-style">
-                <div class="text-center">
-                  <v-btn color="indigo" class="ma-2" tile dark href="/booking">Book Now</v-btn>
-                </div>
-                <v-spacer></v-spacer>
-                <div class="text-center">
-                  <v-btn class="ma-2" tile color="indigo" dark href="/menu">Menu</v-btn>
-                </div>
-              </v-row>
-            </div>
           </v-col>
         </v-flex>
       </v-layout>

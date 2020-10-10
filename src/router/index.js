@@ -38,15 +38,14 @@ const routes = [
     path: "/menu",
     name: "Menu",
     component: Menu,
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: "/EditOrder",
     name: "EditOrder",
     component: EditOrder,
-    
-    meta:{
-      requiresAuth: true
-    }
   },
   {
     path: "/EditBooking",
