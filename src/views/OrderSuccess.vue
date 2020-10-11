@@ -23,6 +23,9 @@
                 <h3>Booking Date: {{ date }}</h3>
                 <h3>Location: 69 Commonwealth St, Surry Hills NSW 2010</h3>
               </v-card-text>
+              <v-card-actions>
+                <v-btn to="/dashboard">Return to Dashboard</v-btn>
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-flex>
