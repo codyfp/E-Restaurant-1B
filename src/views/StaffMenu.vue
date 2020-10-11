@@ -3,6 +3,8 @@
     <v-row>
         <v-col>
             <h1>Menu</h1>
+            <v-btn @click='saveChanges'>Save Menu Changes</v-btn>
+            <!-- <v-btn @click="uploadmenu">Upload Menu</v-btn> -->
             <v-btn @click="meal = 'breakfast'">Breakfast</v-btn>
             <v-btn @click="meal = 'lunch'">Lunch</v-btn>
             <v-btn @click="meal = 'dinner'">Dinner</v-btn>
@@ -24,7 +26,7 @@
                             <p>{{m.price}}</p>
                         </v-row>
                         <v-row>
-                            <v-btn rounded @click="overlay = !overlay, index = m.id">Add to order</v-btn>
+                            <v-btn rounded @click="overlay = !overlay, index = m.id">Edit Item</v-btn>
                         </v-row>
                     </v-col>
                 </v-row>
@@ -37,7 +39,12 @@
           :absolute="absolute"
           :value="overlay"
         >
-        <AddToOrder v-on:updateBasket='updateBasket' :itemName='menu[meal][index].food' :itemPrice='menu[meal][index].price'/>
+        <EditItem 
+        v-on:updateItem='updateItem' 
+        :itemName='menu[meal][index].food' 
+        :itemPrice='menu[meal][index].price'
+        :itemId='menu[meal][index].id'
+        :meal='meal'/>
           <v-btn
             color="success"
             @click="overlay = false"
@@ -60,11 +67,11 @@
 <script>
 import db from "@/firebase/init";
 
-import AddToOrder from '@/components/AddToOrder.vue'
+import EditItem from '@/components/EditItem.vue'
 export default {
     name: 'Menu',
     components:{
-        AddToOrder
+        EditItem
     },
     data(){
         return{
@@ -72,48 +79,40 @@ export default {
             absolute: true,
             index: 0,
             overlay: false,
-            menu: 
-                {
-                breakfast: [
-                    {food: "Burger", description: "Toasted to Perfection", price: 4.35, id: 0},
-                    {food: "Bread", description: "Toasted to Perfection also", price: 6.95, id: 1},
-                    {food: "Pizza", description: "Fresh from the garden", price: 38.95, id: 2},
-                ],
-                lunch: [
-                    {food: "Burger", description: "Toasted to Perfection", price: 4.35, id: 0},
-                    {food: "Bread", description: "Toasted to Perfection also", price: 6.95, id: 1},
-                    {food: "Pizza", description: "Fresh from the garden", price: 38.95, id: 2},
-                ],
-                dinner: [
-                    {food: "Baguette", description: "Toasted to Perfection", price: 4.35, id: 0},
-                    {food: "Garlic Bread", description: "Toasted to Perfection also", price: 6.95, id: 1},
-                    {food: "Snails", description: "Fresh from the garden", price: 38.95, id: 2},
-                    {food: "Truffles Spaghettini", description: "I dont know what this is", price: 25.95, id: 3},
-                    {food: "Vegan Food", description: "Yuck", price: 44.35, id: 4},  
-                    ]
-                },
+            menu: {},
             basket: [],
             totalPrice: 0.00
         }    
     },
+    created(){
+        let menuRef = db.collection("Menu").doc("menu")
+        menuRef.get().then(doc => {
+            let menuHolder = doc.data()
+            this.menu = menuHolder
+            console.log(this.test)
+        })
+    },
     methods: {
-        updateBasket(e){
-            console.log(e)
-            this.basket.push(e)
-            this.overlay = false
-            this.totalPrice += (e.itemPrice * e.quantity)
-            
-        },
         addToBooking(){
             let bookingref = db.collection("Orders Online")
             bookingref.add({
-                    basket: this.basket
-                
-            })
+                    basket: this.basket 
+                })
+        },
+        uploadmenu(){
+            db.collection("Menu").doc("menu").set(this.menu)
+        },
+        updateItem(e){
+            let item = e.name
+            let price = e.price
+            this.menu[e.meal][e.id].food = item
+            this.menu[e.meal][e.id].price = price
+        },
+        saveChanges(){
+            db.collection("Menu").doc("menu").set(this.menu)
+            console.log("mad")
         }
     }
-
-    
 }
 </script>
 
