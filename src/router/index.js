@@ -82,9 +82,6 @@ const routes = [
     path: "/Staff",
     name: "StaffPortal",
     component: StaffPortal,
-    meta:{
-      requiresAuth: true
-    }
   },
   {
     path: "/About",

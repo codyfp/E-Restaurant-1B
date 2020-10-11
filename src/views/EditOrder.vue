@@ -275,7 +275,6 @@ export default {
     },
     getUser: function (id) {
       let detail = [];
-      console.log(id);
       db.collection("users")
         .doc(id)
         .get()
