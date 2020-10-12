@@ -49,6 +49,8 @@
                 <table class="schedule">
                   <tr>
                     <th>Number</th>
+                    <th>Reference</th>
+                    <th>Name</th>
                     <th>Date</th>
                     <th>Time</th>
                     <th>Seats</th>
@@ -58,6 +60,8 @@
                   </tr>
                   <tr v-for="booking in filteredBookings" :key="booking.id">
                     <td>{{ placement(booking.id) + 1 }}</td>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.UserName[0] }}</td>
                     <td>
                       {{ booking.datetime.seconds | moment("DD MMM YYYY") }}
                     </td>
@@ -171,6 +175,7 @@ export default {
           this.bookings.splice(this.placement(doc.id), 1, {
             id: doc.id,
             UsrID: doc.data().UsrID,
+            UserName: this.getUser(doc.data().UsrID),
             datetime: doc.data().datetime,
             seat: doc.data().seat,
           });
@@ -180,6 +185,7 @@ export default {
           this.bookings.push({
             id: doc.id,
             UsrID: doc.data().UsrID,
+            UserName: this.getUser(doc.data().UsrID),
             datetime: doc.data().datetime,
             seat: doc.data().seat,
           });
@@ -266,6 +272,21 @@ export default {
         return true;
       }
       return false;
+    },
+    getUser: function (id) {
+      let detail = [];
+      db.collection("users")
+        .doc(id)
+        .get()
+        .then((result) => {
+          if (!result.exists) {
+            console.log("No such document!");
+            return "ssaldkjas";
+          } else {
+            detail.push(result.data().fullName);
+          }
+        });
+      return detail;
     },
   },
 };

@@ -280,6 +280,7 @@ export default {
     updateBooking() {
       this.booking.seat = this.seat;
       this.booking.datetime = new Date(this.date + " " + this.time);
+      this.booking.meal = this.meal;
       this.$refs.form.validate();
       if (this.valid && this.TIME != "") {
         db.collection("bookings").doc(this.id).update(this.booking);

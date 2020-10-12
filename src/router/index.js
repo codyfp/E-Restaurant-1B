@@ -16,6 +16,7 @@ import FAQs from "../views/FAQs.vue";
 import EditAccount from "../views/EditAccount.vue";
 import firebase from 'firebase';
 import ErrorSigninPage from "../views/ErrorSigninPage.vue";
+import StaffDashboard from "../views/StaffDashboard.vue"
 
 Vue.use(VueRouter);
 Vue.use(require("vue-moment"));
@@ -82,9 +83,6 @@ const routes = [
     path: "/Staff",
     name: "StaffPortal",
     component: StaffPortal,
-    meta:{
-      requiresAuth: true
-    }
   },
   {
     path: "/About",
@@ -116,7 +114,15 @@ const routes = [
     path: "/ErrorSigninPage",
     name: "ErrorSigninPage",
     component: ErrorSigninPage,
-  }
+  },
+  {
+    path: "/StaffDashboard",
+    name: "StaffDashboard",
+    component: StaffDashboard,
+    meta:{
+      requiresAuth: true
+    }
+  },
 ];
 
 const router = new VueRouter({

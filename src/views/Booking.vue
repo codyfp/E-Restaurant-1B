@@ -137,6 +137,21 @@
                   >
                 </v-card>
               </v-dialog>
+              <v-dialog v-model="dialog2" width="410">
+                <v-card>
+                  <v-card-title primary-title class="justify-center">
+                    <span class="headline">Booking Error</span>
+                  </v-card-title>
+                  <v-card-text>
+                    Only one booking can be made for each of the restaurant
+                    service times (e.g. breakfast, lunch, dinner) per day.
+                    Please refer to Booking Reference No. {{ queryResult }}.
+                  </v-card-text>
+                  <v-btn color="error" @click="dialog2 = false" class="my-1"
+                    >Back</v-btn
+                  >
+                </v-card>
+              </v-dialog>
             </v-form>
           </v-col>
         </v-flex>
@@ -162,6 +177,7 @@ export default {
       next: "",
       valid: false,
       dialog: false,
+      dialog2: false,
       booking: {
         seat: "",
         datetime: "",
@@ -222,6 +238,8 @@ export default {
       time: "",
       selected: false,
       feedback: "",
+      profileData: "",
+      queryResult: [],
     };
   },
 
@@ -289,6 +307,7 @@ export default {
     btnSkip() {
       this.booking.UsrID = this.user;
       this.booking.seat = this.seat;
+      this.booking.meal = this.meal;
       this.booking.datetime = new Date(this.date + " " + this.time);
       this.id = Math.floor(Math.random() * 999999999);
       db.collection("bookings")
@@ -300,14 +319,41 @@ export default {
             params: { id: this.id, name: this.name },
           })
         );
-
-      // alert("Booking has been made (Placeholder - Plan to direct to success)");
     },
 
     btnNext() {
+      let qResult = [];
       this.$refs.form.validate();
       if (this.valid && this.TIME != "") {
-        this.dialog = true;
+        db.collection("bookings")
+          .where("UsrID", "==", this.user)
+          .where("datetime", ">=", new Date(this.date))
+          .where(
+            "datetime",
+            "<",
+            new Date(
+              this.$moment(this.date).add(1, "days").format("YYYY-MM-DD")
+            )
+          )
+          .where("meal", "==", this.meal)
+          .get()
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              qResult.push(doc.id);
+            });
+          })
+          .catch(function (error) {
+            console.log("Error getting documents: ", error);
+          });
+        var that = this;
+        setTimeout(function () {
+          that.queryResult = qResult[0];
+          if (qResult.length > 0) {
+            that.dialog2 = true;
+          } else {
+            that.dialog = true;
+          }
+        }, 500);
       } else if (this.valid && this.TIME == "") {
         this.feedback = "Please select a time above.";
       } else this.feedback = "Please complete all required fields.";
