@@ -26,6 +26,49 @@
           </v-card>
         </v-card>
       </v-row>
+
+       <v-row align="center" justify="center">
+        <v-card color="rgba(255,255,255,255)">
+        <h2>Staff Details</h2>
+          <table style="width:100%">
+            <tr>
+              <th>Firstname</th>
+              <th>Lastname</th> 
+              <th>Position</th>
+              <th>Mobile Number</th>
+              <th>Email</th>
+            </tr>
+            <tr>
+              <td>Jill</td>
+              <td>Smith</td>
+              <td>Head Chef</td>
+              <td>0426 456 843</td>
+              <td>Jill@gmail.com</td>
+            </tr>
+            <tr>
+              <td>Eve</td>
+              <td>Jackson</td>
+              <td>Waiter</td>
+              <td>0458 543 231</td>
+              <td>Eve.Jackson@yahoo.com.au</td>
+            </tr>
+            <tr>
+              <td>John</td>
+              <td>Doe</td>
+              <td>Manager</td>
+              <td>0498 354 654</td>
+              <td>John_Manger@gmail.com</td>
+            </tr>
+            <tr>
+              <td>Emmanuel</td>
+              <td>Macaron</td>
+              <td>French Ingredients Importer</td>
+              <td>0466 545 468</td>
+              <td>President@France.gov.fr</td>
+            </tr>
+          </table>
+          </v-card>
+          </v-row>
     </v-container>
   </div>
 </template>
