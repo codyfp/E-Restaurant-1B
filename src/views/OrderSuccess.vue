@@ -17,7 +17,6 @@
                 </h2>
                 <h3>Reference No: {{ id }}</h3>
                 <h3>Booking for: {{ name }}</h3>
-                {{ this.email }}
                 <h3>Number of Seats: {{ seat }}</h3>
                 <h3>Booking Time: {{ time }}</h3>
                 <h3>Booking Date: {{ date }}</h3>
@@ -77,7 +76,7 @@ export default {
   created() {
     this.id = this.$route.params.id;
     this.name = this.$route.params.name;
-    this.email = this.$route.params.user;
+    this.email = this.$route.params.email;
 
     db.collection("bookings")
       .doc(JSON.stringify(this.id))
@@ -118,7 +117,7 @@ export default {
       }
       window.Email.send({
         SecureToken: "d9e936a8-27cb-443b-827c-72937ef20e82",
-        To: "customerefooddemo@gmail.com",
+        To: this.email,
         From: "LeBistrotdAndre@gmail.com",
         FromName: "Le Bistrot d'Andre",
         Subject: "Order Confirmation " + this.id,

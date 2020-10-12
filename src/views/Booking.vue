@@ -9,6 +9,7 @@
         meal: booking.meal,
         date: booking.datetime,
         name: this.name,
+        email: this.user,
       }"
     />
     <v-container v-if="addOrder == false">

@@ -117,7 +117,11 @@ export default {
         .then(
           this.$router.push({
             name: "OrderSuccess",
-            params: { id: this.id, name: this.bookingdetails.name },
+            params: {
+              id: this.id,
+              name: this.bookingdetails.name,
+              email: this.bookingdetails.email,
+            },
           })
         );
     },
