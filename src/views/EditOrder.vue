@@ -55,7 +55,6 @@
                     <th>Time</th>
                     <th>Seats</th>
                     <th>Location</th>
-                    <th>Menu</th>
                     <th>Booking</th>
                   </tr>
                   <tr v-for="booking in filteredBookings" :key="booking.id">
@@ -68,13 +67,6 @@
                     <td>{{ booking.datetime.seconds | moment("h:mm a") }}</td>
                     <td>{{ booking.seat }}</td>
                     <td>Surry Hills</td>
-                    <td>
-                      <v-btn
-                        color="primary"
-                        :disabled="orderDisable(booking.datetime.seconds)"
-                        >Edit Menu
-                      </v-btn>
-                    </td>
                     <td>
                       <v-btn
                         color="error"

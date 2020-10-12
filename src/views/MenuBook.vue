@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <v-container>
+  <div class="pa-6">
+    <v-container class="white" rounded>
       <v-row>
         <v-col>
-          <h1 id="menu">Menu</h1>
+          <h1>Menu</h1>
           <v-btn @click="meal = 'breakfast'">Breakfast</v-btn>
           <v-btn @click="meal = 'lunch'">Lunch</v-btn>
           <v-btn @click="meal = 'dinner'">Dinner</v-btn>
@@ -132,9 +132,5 @@ export default {
 <style>
 .basket {
   display: flex;
-}
-
-#menu {
-  color: white;
 }
 </style>
