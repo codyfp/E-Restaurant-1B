@@ -22,7 +22,9 @@
                   label="New Password"
                   hint="At least 6 characters"
                   class="input-group--focused"
+                  v-model="password"
                   @click:append="show2 = !show2"
+
                 ></v-text-field>
               </v-card-text>
 
@@ -51,6 +53,7 @@ export default {
       details: {
         fullName: null,
       },
+      password: null,
       feedback: null,
       user: firebase.auth().currentUser
     };
@@ -74,12 +77,15 @@ export default {
   },
   
   methods: {
-
+    updatePass(){
+    },
     updateField() {
       let ref = db.collection("users").doc(this.user.email);
       ref.update({
         FullName: this.details.fullName,
       });
+      console.log(this.password)
+      this.user.updatePassword(this.password)
       this.feedback = "Changes Complete";
     }
   }

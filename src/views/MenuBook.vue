@@ -57,8 +57,16 @@
         </div>
         <p>Total Price: ${{ parseFloat(totalPrice).toFixed(2) }}</p>
       </div>
-      <v-btn @click="addToBooking">Add to Booking</v-btn>
-      <v-btn to="/Booking">Back</v-btn>
+      <v-col>
+        <v-row>
+            <v-btn @click="addToBooking">Add to Booking</v-btn>
+            <v-btn to="/Booking">Back</v-btn>
+        </v-row>
+        <v-row>
+            <v-text-field v-model="usercoupon"></v-text-field>
+            <v-btn @click="addcoupon">Add Coupon Code</v-btn>
+        </v-row>
+      </v-col>
     </v-container>
   </div>
 </template>
@@ -83,6 +91,9 @@ export default {
       basket: [],
       totalPrice: 0.0,
       id: 0,
+      couponCode: "france",
+      usercoupon: "",
+      couponclaimed : false
     };
   },
   created() {
@@ -94,6 +105,15 @@ export default {
     });
   },
   methods: {
+      addcoupon(){
+          if(this.couponclaimed == false){
+            if(this.usercoupon == this.couponCode){
+              console.log("funk")
+              this.totalPrice = this.totalPrice * 0.8
+              this.couponclaimed = true
+            }
+        } 
+    },
     updateBasket(e) {
       console.log(e);
       this.basket.push(e);

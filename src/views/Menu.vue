@@ -98,8 +98,4 @@ export default {
 .basket {
   display: flex;
 }
-
-#menu {
-  color: white;
-}
 </style>

@@ -66,8 +66,8 @@
 
 <script>
 import db from "@/firebase/init";
-
 import EditItem from '@/components/EditItem.vue'
+
 export default {
     name: 'Menu',
     components:{
