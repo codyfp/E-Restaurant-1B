@@ -1,13 +1,15 @@
 <template>
   <div class="bg">
-    <Menu 
-    v-if="addOrder == true"
-    :kbookingdetails='"jim"'
-    :bookingdetails='{
-      userid: booking.UsrID,
-      seat: booking.seat,
-      meal: booking.meal,
-      date: booking.datetime}'
+    <Menu
+      v-if="addOrder == true"
+      :kbookingdetails="'jim'"
+      :bookingdetails="{
+        userid: booking.UsrID,
+        seat: booking.seat,
+        meal: booking.meal,
+        date: booking.datetime,
+        name: this.name,
+      }"
     />
     <v-container v-if="addOrder == false">
       <v-layout row>
@@ -121,16 +123,15 @@
               </v-card>
               <v-dialog v-model="dialog" width="400" persistent>
                 <v-card>
-                  
-                    <v-btn
-                      @click="addToOrder"
-                      width="250"
-                      height="50"
-                      class="ma-5"
-                    >
-                      Order Menu
-                    </v-btn>
-                  
+                  <v-btn
+                    @click="addToOrder"
+                    width="250"
+                    height="50"
+                    class="ma-5"
+                  >
+                    Order Menu
+                  </v-btn>
+
                   <v-spacer></v-spacer>
                   <v-btn
                     @click="btnSkip"
@@ -170,13 +171,13 @@
 </template>
 
 <script>
-import Menu from '@/views/MenuBook.vue'
+import Menu from "@/views/MenuBook.vue";
 import db from "@/firebase/init";
 import firebase from "firebase";
 export default {
   name: "Booking",
   components: {
-    Menu
+    Menu,
   },
   data() {
     return {
@@ -250,7 +251,7 @@ export default {
       feedback: "",
       profileData: "",
       queryResult: [],
-    }
+    };
   },
 
   created() {
@@ -309,8 +310,8 @@ export default {
   },
 
   methods: {
-    test(){
-      console.log(this.booking)
+    test() {
+      console.log(this.booking);
     },
     selectTime(time) {
       // this.TIME = " at " + this.$moment(time * 1000).format("h:mm a");
@@ -321,6 +322,8 @@ export default {
       this.booking.UsrID = this.user;
       this.booking.seat = this.seat;
       this.booking.meal = this.meal;
+      this.booking.order = [];
+      this.booking.totalprice = 0;
       this.booking.datetime = new Date(this.date + " " + this.time);
       this.id = Math.floor(Math.random() * 999999999);
       db.collection("bookings")
@@ -333,16 +336,16 @@ export default {
           })
         );
     },
-    addToOrder(){
-      this.dialog = false
-      this.addOrder = true,
-      console.log("working")
-      
-      this.booking.UsrID = this.user;
+    addToOrder() {
+      this.dialog = false;
+      (this.addOrder = true),
+        // console.log("working")
+
+        (this.booking.UsrID = this.user);
       this.booking.seat = this.seat;
       this.booking.meal = this.meal;
       this.booking.datetime = new Date(this.date + " " + this.time);
-      this.id = Math.floor(Math.random() * 999999999);
+      // this.id = Math.floor(Math.random() * 999999999);
     },
 
     btnNext() {
