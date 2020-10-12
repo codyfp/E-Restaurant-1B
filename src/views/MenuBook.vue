@@ -55,7 +55,7 @@
           <p>{{ b.itemName }}:</p>
           <p>{{ b.quantity }}</p>
         </div>
-        <p>Total Price: ${{ Math.round(totalPrice) }}</p>
+        <p>Total Price: ${{ parseFloat(totalPrice).toFixed(2) }}</p>
       </div>
       <v-btn @click="addToBooking">Add to Booking</v-btn>
       <v-btn to="/Booking">Back</v-btn>
@@ -107,7 +107,7 @@ export default {
         seat: this.bookingdetails.seat,
         meal: this.bookingdetails.meal,
         order: this.basket,
-        totalprice: this.totalPrice,
+        totalprice: (this.totalPrice = parseFloat(this.totalPrice).toFixed(2)),
       };
       this.id = Math.floor(Math.random() * 999999999);
       //   console.log(order);

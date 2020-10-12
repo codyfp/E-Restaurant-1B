@@ -23,6 +23,21 @@
                 <h3>Booking Date: {{ date }}</h3>
                 <h3>Location: 69 Commonwealth St, Surry Hills NSW 2010</h3>
               </v-card-text>
+              <table v-if="order.length !== 0" class="schedule">
+                <tr>
+                  <th>Food Item</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                </tr>
+                <tr v-for="item in order" :key="item.id">
+                  <td>{{ item.itemName }}</td>
+                  <td>${{ item.itemPrice }}</td>
+                  <td>{{ item.quantity }}</td>
+                </tr>
+              </table>
+              <v-card-text v-if="order.length !== 0">
+                <h2>Total: ${{ total }}</h2>
+              </v-card-text>
               <v-card-actions>
                 <v-btn to="/dashboard">Return to Dashboard</v-btn>
               </v-card-actions>
@@ -48,6 +63,8 @@ export default {
       seat: "",
       date: "",
       time: "",
+      order: null,
+      total: 0,
     };
   },
 
@@ -60,6 +77,7 @@ export default {
   created() {
     this.id = this.$route.params.id;
     this.name = this.$route.params.name;
+    this.email = this.$route.params.user;
 
     db.collection("bookings")
       .doc(JSON.stringify(this.id))
@@ -75,6 +93,8 @@ export default {
           this.time = this.$moment(
             result.data().datetime.seconds * 1000
           ).format("h:mm a");
+          this.order = result.data().order;
+          this.total = result.data().totalprice;
           this.emailSuccess();
         }
       });
@@ -84,6 +104,18 @@ export default {
 
   methods: {
     emailSuccess() {
+      let msgOrder =
+        "----------------------------------------------------------<br />";
+      for (let i = 0; i < this.order.length; i++) {
+        msgOrder +=
+          "X" +
+          this.order[i].quantity +
+          "\t" +
+          this.order[i].itemName +
+          "\t$" +
+          this.order[i].itemPrice +
+          "<br />";
+      }
       window.Email.send({
         SecureToken: "d9e936a8-27cb-443b-827c-72937ef20e82",
         To: "customerefooddemo@gmail.com",
@@ -101,7 +133,11 @@ export default {
           this.time +
           "<br />Booking Date: " +
           this.date +
-          "<br />Location: 69 Commonwealth St, Surry Hills NSW 2010<br /><br />Thanks,<br />Le Bistrot d'Andre Customer Support Team",
+          "<br />Location: 69 Commonwealth St, Surry Hills NSW 2010<br /><br />----------------------------------------------------------<br />Invoice<br />" +
+          msgOrder +
+          "----------------------------------------------------------<br />Total: $" +
+          this.total +
+          "<br />----------------------------------------------------------<br /><br />Thanks,<br />Le Bistrot d'Andre Customer Support Team",
       });
     },
   },

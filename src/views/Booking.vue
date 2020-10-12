@@ -332,7 +332,7 @@ export default {
         .then(
           this.$router.push({
             name: "OrderSuccess",
-            params: { id: this.id, name: this.name },
+            params: { id: this.id, name: this.name, email: this.user },
           })
         );
     },
