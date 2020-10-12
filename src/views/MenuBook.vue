@@ -24,13 +24,28 @@
                         <v-row>
                             <p>{{m.price}}</p>
                         </v-row>
-
+                        <v-row>
+                            <v-btn rounded @click="overlay = !overlay, index = m.id">Add to order</v-btn>
+                        </v-row>
                     </v-col>
                 </v-row>
             </v-card>
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
+      <v-row justify="center">
+        <v-overlay
+          :absolute="absolute"
+          :value="overlay"
+        >
+        <AddToOrder v-on:updateBasket='updateBasket' :itemName='menu[meal][index].food' :itemPrice='menu[meal][index].price'/>
+          <v-btn
+            color="success"
+            @click="overlay = false"
+          >Cancel
+          </v-btn>
+        </v-overlay>
+      </v-row>
   </v-row>
     <div>
         <div class='basket' v-for='b in basket' :key='b'>
@@ -46,9 +61,13 @@
 
 <script>
 import db from "@/firebase/init";
+import AddToOrder from '@/components/AddToOrder.vue'
 
 export default {
     name: 'Menu',
+    components:{
+        AddToOrder
+    },
     props: ['bookingdetails'],
     data(){
         return{
@@ -60,8 +79,8 @@ export default {
             basket: [],
             totalPrice: 0.00
         }    
-    },        
-    created(){
+    },
+        created(){
         let menuRef = db.collection("Menu").doc("menu")
         menuRef.get().then(doc => {
             let menuHolder = doc.data()

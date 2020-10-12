@@ -16,7 +16,7 @@
               <v-btn color="indigo" class="ma-2" tile dark to="/Booking"
                 >Book Now</v-btn
               >
-              <v-btn class="ma-2" tile color="indigo" dark to="/Menu"
+              <v-btn class="ma-2" tile color="indigo" dark to="/StaffMenu"
                 >Menu</v-btn
               >
               <v-btn class="ma-2" tile color="indigo" dark to="/EditOrder"
@@ -33,7 +33,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+
+    };
   },
 };
 </script>

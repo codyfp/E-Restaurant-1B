@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Booking from "../views/Booking.vue";
 import Menu from "../views/Menu.vue";
+import StaffMenu from "../views/StaffMenu.vue";
 import EditOrder from "../views/EditOrder";
 import EditBooking from "../views/EditBooking";
 import Register from "../views/Register.vue";
@@ -39,6 +40,11 @@ const routes = [
     path: "/menu",
     name: "Menu",
     component: Menu,
+  },
+  {
+    path: "/staffmenu",
+    name: "StaffMenu",
+    component: StaffMenu,
     meta:{
       requiresAuth: true
     }

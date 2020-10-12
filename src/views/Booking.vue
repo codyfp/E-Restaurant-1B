@@ -1,6 +1,15 @@
 <template>
   <div class="bg">
-    <v-container>
+    <Menu 
+    v-if="addOrder == true"
+    :kbookingdetails='"jim"'
+    :bookingdetails='{
+      userid: booking.UsrID,
+      seat: booking.seat,
+      meal: booking.meal,
+      date: booking.datetime}'
+    />
+    <v-container v-if="addOrder == false">
       <v-layout row>
         <v-flex>
           <v-col>
@@ -112,16 +121,16 @@
               </v-card>
               <v-dialog v-model="dialog" width="400" persistent>
                 <v-card>
-                  <router-link to="Menu" tag="button">
+                  
                     <v-btn
-                      @click="dialog = false"
+                      @click="addToOrder"
                       width="250"
                       height="50"
                       class="ma-5"
                     >
                       Order Menu
                     </v-btn>
-                  </router-link>
+                  
                   <v-spacer></v-spacer>
                   <v-btn
                     @click="btnSkip"
@@ -161,13 +170,17 @@
 </template>
 
 <script>
+import Menu from '@/views/MenuBook.vue'
 import db from "@/firebase/init";
 import firebase from "firebase";
 export default {
   name: "Booking",
-
+  components: {
+    Menu
+  },
   data() {
     return {
+      addOrder: false,
       user: "",
       id: 0,
       name: "",
@@ -178,10 +191,7 @@ export default {
       valid: false,
       dialog: false,
       dialog2: false,
-      booking: {
-        seat: "",
-        datetime: "",
-      },
+      booking: {},
       bookings: [],
       seats: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       seat: "",
@@ -240,7 +250,7 @@ export default {
       feedback: "",
       profileData: "",
       queryResult: [],
-    };
+    }
   },
 
   created() {
@@ -299,6 +309,9 @@ export default {
   },
 
   methods: {
+    test(){
+      console.log(this.booking)
+    },
     selectTime(time) {
       // this.TIME = " at " + this.$moment(time * 1000).format("h:mm a");
       this.TIME = " at " + time;
@@ -319,6 +332,17 @@ export default {
             params: { id: this.id, name: this.name },
           })
         );
+    },
+    addToOrder(){
+      this.dialog = false
+      this.addOrder = true,
+      console.log("working")
+      
+      this.booking.UsrID = this.user;
+      this.booking.seat = this.seat;
+      this.booking.meal = this.meal;
+      this.booking.datetime = new Date(this.date + " " + this.time);
+      this.id = Math.floor(Math.random() * 999999999);
     },
 
     btnNext() {
