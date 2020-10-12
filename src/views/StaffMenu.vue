@@ -56,7 +56,7 @@
     <div>
         <div class='basket' v-for='b in basket' :key='b'>
             <p>{{b.itemName}}: </p>
-            <p>{{b.quantity}}</p>
+            <p>{{b.quantity}} </p>
         </div>
         <p>Total Price: ${{Math.round(totalPrice)}}</p>
     </div>
