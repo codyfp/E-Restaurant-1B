@@ -1,7 +1,6 @@
 <template>
     <v-layout row justify="center">
-        
-        <h1>Edit Account</h1>
+
         <v-row justify="center">
           <v-col>
             <v-card ref="form">

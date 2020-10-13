@@ -1,11 +1,11 @@
 <template>
   <v-app>
   <Navbar/>
-    <v-main>
-      <router-view></router-view>
+    <v-main id="main">
+      <router-view id="main"></router-view>
    
     </v-main>
-  <Footer/>
+  <Footer id="footer"/>
   </v-app>
 </template>
 
@@ -31,6 +31,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+#main{
+  padding-bottom: 108px;
+  min-height:calc(100vh-108px);
+  position:relative;
+}
+#footer{
+  bottom:0;
+  width:100%;
+  height:108px;
+  position: absolute;
+    
 }
 </style>
 
