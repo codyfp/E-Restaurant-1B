@@ -1,8 +1,18 @@
+<!-- 
+ * Module Description:
+ * Dashboard for Customers and Staff to view Current restuarant bookings.
+ * 
+ * VueVersion   Date                    Author         
+ * 2.6.12       2020-09-20 15:54:16     Anesu Chakaingesu 
+ *
+ * @Last Modified by:   Joseph
+ * @Last Modified time: 2020-10-12 16:33:52
+ *
+ -->
 <template>
   <div class="bg-image">
     <v-container>
       <v-layout row>
-        <div id="maps"></div>
         <v-flex>
           <div>
             <h1 class="white pa-3">Welcome, {{ name }}!</h1>
@@ -313,10 +323,6 @@ html {
   /* The image used */
   background-image: url("./img/bg-blur-image.jpg");
 
-  /* Add the blur effect */
-  /* filter: blur(8px);
-  -webkit-filter: blur(8px); */
-
   /* Full height */
   height: 100%;
 
@@ -326,22 +332,6 @@ html {
   background-size: cover;
 }
 
-/* Position text in the middle of the page/image */
-.bg-text {
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
-  color: white;
-  font-weight: bold;
-  border: 3px solid #f1f1f1;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  width: 80%;
-  padding: 20px;
-  text-align: center;
-}
 .main-text {
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
@@ -351,21 +341,7 @@ html {
   padding: 1px;
   text-align: center;
 }
-.bg-text-style {
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
-  color: white;
-  font-weight: bold;
-  border: 3px solid #f1f1f1;
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  width: 20%;
-  padding: 20px;
-  text-align: center;
-}
+
 .blur {
   z-index: 1;
   height: 100%;
